@@ -1,8 +1,61 @@
 local player = game.Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local root = char:WaitForChild("HumanoidRootPart")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
 local running = false
 local selectedWorld = "Rooms"
+local heartbeatConn = nil
+
+-- Remote setup (needed to read Level for auto room detection)
+local Events = ReplicatedStorage:WaitForChild("Events")
+local remotes = {
+    getPlayerData = Events:WaitForChild("GetPlayerData"),
+}
+
+local function getStats()
+    local ok, data = pcall(function()
+        return remotes.getPlayerData:InvokeServer()
+    end)
+    if ok and data and data.Stats then
+        return data.Stats
+    end
+    return nil
+end
+
+-- ============================================
+-- ROOM LEVEL MAP (room# -> min level required)
+-- Confirmed in-game values override the placeholder formula.
+-- Rooms 1-13, 21, 22 are still unverified placeholders.
+-- Room 19's gap (+145) is unusually large -- double check that one.
+-- ============================================
+local ROOM_LEVEL_MAP = {}
+for i = 1, 22 do
+    ROOM_LEVEL_MAP[i] = (i == 1) and 1 or ((i - 1) * 25) -- placeholder, unverified rooms only
+end
+
+local VERIFIED_ROOM_LEVELS = {
+    [14] = 365,
+    [15] = 400,
+    [16] = 450,
+    [17] = 510,
+    [18] = 575,
+    [19] = 720, -- unusually large gap, double-check this one
+    [20] = 800,
+}
+for room, level in pairs(VERIFIED_ROOM_LEVELS) do
+    ROOM_LEVEL_MAP[room] = level
+end
+
+local function getRoomForLevel(level)
+    local best = 1
+    for room, req in pairs(ROOM_LEVEL_MAP) do
+        if level >= req and room > best then
+            best = room
+        end
+    end
+    return best
+end
 
 local gui = Instance.new("ScreenGui", player.PlayerGui)
 gui.ResetOnSpawn = false
@@ -50,16 +103,16 @@ cheeseBtn.Font = Enum.Font.GothamBold
 cheeseBtn.TextSize = 11
 Instance.new("UICorner", cheeseBtn).CornerRadius = UDim.new(0, 6)
 
--- Room input
-local roomInput = Instance.new("TextBox", frame)
-roomInput.Size = UDim2.new(1, -10, 0, 28)
-roomInput.Position = UDim2.new(0, 5, 0, 70)
-roomInput.PlaceholderText = "Room number (e.g. 10)"
-roomInput.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-roomInput.TextColor3 = Color3.new(1,1,1)
-roomInput.Font = Enum.Font.Gotham
-roomInput.TextSize = 13
-Instance.new("UICorner", roomInput).CornerRadius = UDim.new(0, 6)
+-- Auto-detected level/room display (replaces the manual room number box)
+local infoLabel = Instance.new("TextLabel", frame)
+infoLabel.Size = UDim2.new(1, -10, 0, 28)
+infoLabel.Position = UDim2.new(0, 5, 0, 70)
+infoLabel.Text = "Level: -- | Room: --"
+infoLabel.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+infoLabel.TextColor3 = Color3.new(1,1,1)
+infoLabel.Font = Enum.Font.Gotham
+infoLabel.TextSize = 13
+Instance.new("UICorner", infoLabel).CornerRadius = UDim.new(0, 6)
 
 -- Start/Stop
 local startBtn = Instance.new("TextButton", frame)
@@ -107,34 +160,71 @@ end
 normalBtn.MouseButton1Click:Connect(function() setWorld("Rooms") end)
 cheeseBtn.MouseButton1Click:Connect(function() setWorld("CheeseRooms") end)
 
+-- Start: room is auto-detected from Level (re-checked ~1x/sec, no need to
+-- spam the data remote every frame). Position toggles in/out of the Win
+-- part on every single frame via Heartbeat, since standing still only
+-- fires Touched once -- toggling re-fires it every frame instead.
+local lastStatsCheck = 0
+local cachedWinPart = nil
+local cachedRoom = nil
+local toggleOut = false
+
 startBtn.MouseButton1Click:Connect(function()
-    local roomNum = roomInput.Text
-    local container = workspace:FindFirstChild(selectedWorld)
-    if not container then
-        status.Text = "World not found!"
-        return
-    end
-    local targetRoom = container:FindFirstChild(roomNum)
-    local winPart = targetRoom and targetRoom:FindFirstChild("Win")
-    if not winPart then
-        status.Text = "Room " .. roomNum .. " not found!"
-        return
-    end
     running = true
-    status.Text = "Farming " .. selectedWorld .. " room " .. roomNum
-    task.spawn(function()
-        while running do
+    status.Text = "Farming " .. selectedWorld .. "..."
+    cachedWinPart = nil
+    cachedRoom = nil
+    lastStatsCheck = 0
+
+    heartbeatConn = RunService.Heartbeat:Connect(function()
+        if not running then return end
+
+        local now = os.clock()
+        if now - lastStatsCheck > 1 then
+            lastStatsCheck = now
+            local stats = getStats()
+            local container = workspace:FindFirstChild(selectedWorld)
+            if stats and container then
+                local level = stats.Level or 1
+                local room = getRoomForLevel(level)
+                infoLabel.Text = string.format("Level: %s | Room: %d", tostring(level), room)
+
+                if room ~= cachedRoom then
+                    cachedRoom = room
+                    local targetRoom = container:FindFirstChild(tostring(room))
+                    cachedWinPart = targetRoom and targetRoom:FindFirstChild("Win")
+                end
+
+                if cachedWinPart then
+                    status.Text = "Farming " .. selectedWorld .. " room " .. room
+                else
+                    status.Text = "Room " .. room .. " not found in " .. selectedWorld
+                end
+            elseif not container then
+                status.Text = selectedWorld .. " not found!"
+                cachedWinPart = nil
+            end
+        end
+
+        if cachedWinPart then
             char = player.Character
             root = char and char:FindFirstChild("HumanoidRootPart")
             if root then
-                root.CFrame = CFrame.new(winPart.Position + Vector3.new(0, 3, 0))
+                -- toggle just outside then back inside the part every frame
+                -- so Touched re-fires instead of only firing once on first contact
+                toggleOut = not toggleOut
+                local offset = toggleOut and Vector3.new(0, 6, 0) or Vector3.new(0, 3, 0)
+                root.CFrame = CFrame.new(cachedWinPart.Position + offset)
             end
-            task.wait(0.2)
         end
-        status.Text = "Status: Idle"
     end)
 end)
 
 stopBtn.MouseButton1Click:Connect(function()
     running = false
+    if heartbeatConn then
+        heartbeatConn:Disconnect()
+        heartbeatConn = nil
+    end
+    status.Text = "Status: Idle"
 end)
