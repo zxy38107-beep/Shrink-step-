@@ -1,2 +1,1056 @@
--- This script was generated using the MoonVeil Obfuscator v1.4.5 [https://moonveil.cc]
-local V,se_,ac,Rb,Pf,hf=pairs,getmetatable,bit32.bxor,type local ff,Ec,Sb,Ac,df,Ab,_f,ne,wd,Kd,ub,x,qd,eb,ea,i_,De,ka,oa,Xb,c,Nf,gb,pf,md,ec,yd,lc,sb,Ce,L,kb,Jb,Re,Eb,ma,_e,a_,va,p,Sa,Od,ba,cb;eb=(getfenv());ea,Ac,p=(string.char),(string.byte),(bit32 .bxor);ub=function(m,Id)local s_,y,b_,sf,Kb,te,f_,rb;sf,te={},function(nb,Dc,Hc)sf[Dc]=ac(nb,8542)-ac(Hc,53886)return sf[Dc]end;rb=sf[-10045]or te(108770,-10045,16524)repeat if rb>=49526 then if rb>=60913 then if rb<=60913 then f_=b_ if Kb~=Kb then rb=sf[18723]or te(40079,18723,20051)else rb=sf[-23605]or te(59709,-23605,54419)end else s_='';rb,y,b_,Kb=sf[71]or te(56716,71,56479),1,10,(#m-1)+10 end else if(y>=0 and b_>Kb)or((y<0 or y~=y)and b_<Kb)then rb=sf[-29055]or te(2350,-29055,54450)else rb=37170 end end elseif rb>=8612 then if rb<=8612 then return s_ else s_,rb=s_..ea(p(Ac(m,(f_-10)+1),Ac(Id,(f_-10)%#Id+1))),sf[4083]or te(19202,4083,46157)end else b_=b_+y;f_=b_ if b_~=b_ then rb=sf[24370]or te(28087,24370,63803)else rb=49526 end end until rb==23255 end;Kd=(select);gb=(function(...)return{[1]={...},[2]=Kd('#',...)}end);ba=((function()local function Y(bc,Ed,ia)if Ed>ia then return end return bc[Ed],Y(bc,Ed+1,ia)end return Y end)());a_,ne=(string.gsub),(string.char);x=(function(Ia)Ia=a_(Ia,'[^ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=]','')return(Ia:gsub('.',function(Nc)if(Nc=='=')then return''end local Oc,ca='',(('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'):find(Nc)-1)for ae=6,1,-1 do Oc=Oc..(ca%2^ae-ca%2^(ae-1)>0 and'1'or'0')end return Oc end):gsub('%d%d%d?%d?%d?%d?%d?%d?',function(ic)if(#ic~=8)then return''end local ge=0 for ha=1,8 do ge=ge+(ic:sub(ha,ha)=='1'and 2^(8-ha)or 0)end return ne(ge)end))end);L,lc,sb,_e,ma,md,i_,Od=eb[ub(' -\v:7\30','SYy')][ub('\237\50\145\249?\138','\152\\\225')],eb[ub('\240\20i\234\14|','\131\96\27')][ub('\r\v\28','~')],eb[ub('\159I;\133S.','\236=I')][ub('\128Q\150M','\226(')],eb[ub('\197\53\211o\149','\167\\')][ub('S$\218V1\198','?W\178')],eb[ub('\20Q\2\vD','v8')][ub('\187yI\160lU','\201\n!')],eb[ub('\157\211\139\137\205','\255\186')][ub(')\127%z','K\30')],eb[ub('.588?','ZT')][ub('p\156fp\146|','\19\243\b')],{};Sa=(function(Ca)local N=Od[Ca]if not(N)then else return N end local pb,_a,ud,hc,W=_e(1,11),_e(1,5),1,{},''while ud<=#Ca do local mc=sb(Ca,ud);ud=ud+1 for ze=117,(8)+116 do local ya=nil if md(mc,1)~=0 then if not(ud<=#Ca)then else ya=lc(Ca,ud,ud);ud=ud+1 end else if ud+1<=#Ca then local Fb=L(ub('\168\223\164','\150'),Ca,ud);ud=ud+2 local ga,X=#W-ma(Fb,5),md(Fb,(_a-1))+3;ya=lc(W,ga,ga+X-1)end end mc=ma(mc,1)if ya then hc[#hc+1]=ya;W=lc(W..ya,-pb)end end end local o_=i_(hc);Od[Ca]=o_ return o_ end);qd=(function()local sd,l_,Wd,ie,Va,mf,rc,Cc,F,Lf,Mf,Rd=eb[ub('u\198c\156%','\23\175')][ub('(\138%\128','J\242')],eb[ub('R\22DL\2','0\127')][ub('\n\26\6\31','h{')],eb[ub('\141&\155|\221','\239O')][ub('\246\251\230','\148')],eb[ub('\253\252\235\166\173','\159\149')][ub('0U\242\53@\238','\\&\154')],eb[ub('%\189\51\231u','G\212')][ub('\208\161p\203\180l','\162\210\24')],eb[ub('K\27xQ\1m','8o\n')][ub('9?(','J')],eb[ub('\255\179\200\229\169\221','\140\199\186')][ub('QCBI','!\"')],eb[ub('\177\50\215\171(\194','\194F\165')][ub('\158v[\138{@','\235\24+')],eb[ub('U\27\57O\1,','&oK')][ub('^I\\',',')],eb[ub('\133\247\147\250\148','\241\150')][ub('\153\216\138\210','\233\185')],eb[ub('E\175S\162T','1\206')][ub('v\157Vb\144M','\3\243&')],eb[ub('\165%\179(\180','\209D')][ub('g_okCh','\14\49\28')]local function of(Gc,we,ce,qe,Se)local Z,Bb,Wa,Ba=Gc[we],Gc[ce],Gc[qe],Gc[Se]local Oa;Z=l_(Z+Bb,4294967295);Oa=sd(Ba,Z);Ba=l_(Wd(ie(Oa,16),Va(Oa,16)),4294967295);Wa=l_(Wa+Ba,4294967295);Oa=sd(Bb,Wa);Bb=l_(Wd(ie(Oa,12),Va(Oa,20)),4294967295);Z=l_(Z+Bb,4294967295);Oa=sd(Ba,Z);Ba=l_(Wd(ie(Oa,8),Va(Oa,24)),4294967295);Wa=l_(Wa+Ba,4294967295);Oa=sd(Bb,Wa);Bb=l_(Wd(ie(Oa,7),Va(Oa,25)),4294967295);Gc[we],Gc[ce],Gc[qe],Gc[Se]=Z,Bb,Wa,Ba return Gc end local Ic,ab={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}local Za=function(Xe,kf,pe)Ic[1],Ic[2],Ic[3],Ic[4]=2345484509,666131688,1924825967,171167725 for Hd=63,(8)+62 do Ic[(Hd-62)+4]=Xe[(Hd-62)]end Ic[13]=kf for jd=229,(3)+228 do Ic[(jd-228)+13]=pe[(jd-228)]end for Uc=72,(16)+71 do ab[(Uc-71)]=Ic[(Uc-71)]end for la=80,(10)+79 do of(ab,1,5,9,13);of(ab,2,6,10,14);of(ab,3,7,11,15);of(ab,4,8,12,16);of(ab,1,6,11,16);of(ab,2,7,12,13);of(ab,3,8,9,14);of(ab,4,5,10,15)end for Ad=48,(16)+47 do Ic[(Ad-47)]=l_(Ic[(Ad-47)]+ab[(Ad-47)],4294967295)end return Ic end local function pa(ed,rf,dc,wc,Ib)local Ua=#wc-Ib+1 if Ua<64 then local A=mf(wc,Ib);wc=A..F(ub('\199','\199'),64-Ua);Ib=1 end eb[ub('\149\183\174\145\182\169','\244\196\221')](#wc>=64)local zd,La=Lf(Cc(ub('\251\137m\148z6\17\197\154\153yH9!\2g\243\137m\148z6\17\197\154\153yH9!\2g\243','\199\192Y\221N\127%\140\174\208M\1\rh6.'),wc,Ib)),Za(ed,rf,dc)for He=36,(16)+35 do zd[(He-35)]=sd(zd[(He-35)],La[(He-35)])end local jf=rc(ub('\211\230\t\18\199\250!\2\29\173\28\203m_\156o\219\230\t\18\199\250!\2\29\173\28\203m_\156o\219','\239\175=[\243\179\21K)\228(\130Y\22\168&'),Mf(zd))if Ua<64 then jf=mf(jf,1,Ua)end return jf end local function wa(vb)local da=''for Sd=113,(#vb)+112 do da=da..vb[(Sd-112)]end return da end local function Dd(Fe,g,le,t_)local P,Oe,lb,Ud=Lf(Cc(ub('\188C\234%dJ\0\210\180C\234%dJ\0\210\180','\128\n\222lP\3\52\155'),Fe)),Lf(Cc(ub('E>\226\48C\159M','yw\214'),le)),{},1 while Ud<=#t_ do Rd(lb,pa(P,g,Oe,t_,Ud));Ud=Ud+64;g=g+1 end return wa(lb)end return function(ua,Je,ef)return Dd(ef,0,Je,ua)end end)();cb=(function()local Hb,E,gc,If,Td,nc,U,Q,Ye,Pb,Ee=eb[ub('\161\179\183\233\241','\195\218')][ub('\16\207\29\213','r\161')],eb[ub('\239\25\249C\191','\141p')][ub('\t\139\4\129','k\243')],eb[ub('<\246*\172l','^\159')][ub('R\160qI\181m',' \211\25')],eb[ub('\202\53\220o\154','\168\\')][ub('\6\232\236\3\253\240','j\155\132')],eb[ub('\132*\146p\212','\230C')][ub('\202\185\198\188','\168\216')],eb[ub('v\162\96\248&','\20\203')][ub('\187\182\171','\217')],eb[ub('\180\230\162\235\165','\192\135')][ub('N!\246B=\241',"\'O\133")],eb[ub('\160(\182%\177','\212I')][ub('\159\a\151\139\n\140','\234i\231')],eb[ub('| \223f:\202','\15T\173')][ub('\146\133\144','\224')],eb[ub('\229\187+\255\161>','\150\207Y')][ub('\231w\229m','\132\31')],eb[ub('^\96\165Dz\176','-\20\215')][ub('\224\248\246\228','\130\129')]local function Tb(rd,Gb)local wf,aa=gc(rd,Gb),If(rd,32-Gb)return Td(nc(wf,aa),4294967295)end local yc=function(vd)local _b={1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298}local function Ae(Xa)local Nb=#Xa local hb=Nb*8;Xa=Xa..ub('^','\222')local Gf=64-((Nb+9)%64)if not(Gf~=64)then else Xa=Xa..Ye(ub('\139','\139'),Gf)end Xa=Xa..Pb(Td(gc(hb,56),255),Td(gc(hb,48),255),Td(gc(hb,40),255),Td(gc(hb,32),255),Td(gc(hb,24),255),Td(gc(hb,16),255),Td(gc(hb,8),255),Td(hb,255))return Xa end local function za(wb)local Rf={}for yb=110,(#wb)+109,64 do U(Rf,wb[ub(':<+','I')](wb,(yb-109),(yb-109)+63))end return Rf end local function qf(Bf,uf)local fc={}for ja=46,(64)+45 do if(ja-45)<=16 then fc[(ja-45)]=nc(If(Ee(Bf,((ja-45)-1)*4+1),24),If(Ee(Bf,((ja-45)-1)*4+2),16),If(Ee(Bf,((ja-45)-1)*4+3),8),Ee(Bf,((ja-45)-1)*4+4))else local Bc,Ka=E(Tb(fc[(ja-45)-15],7),Tb(fc[(ja-45)-15],18),gc(fc[(ja-45)-15],3)),E(Tb(fc[(ja-45)-2],17),Tb(fc[(ja-45)-2],19),gc(fc[(ja-45)-2],10));fc[(ja-45)]=Td(fc[(ja-45)-16]+Bc+fc[(ja-45)-7]+Ka,4294967295)end end local Wb,Zb,ad,cd,Hf,Ub,ob,tb=Q(uf)for na=239,(64)+238 do local B,sc=E(Tb(Hf,6),Tb(Hf,11),Tb(Hf,25)),E(Td(Hf,Ub),Td(Hb(Hf),ob))local Tc,Vb,Zc=Td(tb+B+sc+_b[(na-238)]+fc[(na-238)],4294967295),E(Tb(Wb,2),Tb(Wb,13),Tb(Wb,22)),E(Td(Wb,Zb),Td(Wb,ad),Td(Zb,ad))local Zd=Td(Vb+Zc,4294967295);tb=ob;ob=Ub;Ub=Hf;Hf=Td(cd+Tc,4294967295);cd=ad;ad=Zb;Zb=Wb;Wb=Td(Tc+Zd,4294967295)end return Td(uf[1]+Wb,4294967295),Td(uf[2]+Zb,4294967295),Td(uf[3]+ad,4294967295),Td(uf[4]+cd,4294967295),Td(uf[5]+Hf,4294967295),Td(uf[6]+Ub,4294967295),Td(uf[7]+ob,4294967295),Td(uf[8]+tb,4294967295)end vd=Ae(vd)local xa,zc,kc=za(vd),{1779033703,3144134277,1013904242,2773480762,1359893119,2600822924,528734635,1541459225},''for ee,ta in eb[ub('R\211\136R\209\154',';\163\233')](xa)do zc={qf(ta,zc)}end for id,Ke in eb[ub('\30\232i\30\234{','w\152\b')](zc)do kc=kc..Pb(Td(gc(Ke,24),255));kc=kc..Pb(Td(gc(Ke,16),255));kc=kc..Pb(Td(gc(Ke,8),255));kc=kc..Pb(Td(Ke,255))end return kc end return yc end)()local Te,jc,kd,af,r_,Be,Ve,cc,Df,Aa,Rc,gf,Kc,Ze,vf,db,Ga,I,xb,je,xf,Pd,Mc,u_,tc,uc,Xc,R,fa_,q=eb[ub('_\185[\165','+\192')],eb[ub('L\134]\137P','<\229')],eb[ub('\232L\255Q\255','\141>')],eb[ub('R\6\48\182K\v;\177','&i^\195')],eb[ub('_\21\14[\20\t','>f}')],eb[ub('\216\168m\206\174u','\171\205\1')],eb[ub('\n\145\190zd&\24\128\171um7','y\244\202\23\1R')],eb[ub('\251\4V\225\30C','\136p$')][ub('V\193\150]\207\144','0\174\228')],eb[ub("\253=\24\231\'\r",'\142Ij')][ub('\178v\188\166{\167','\199\24\204')],eb[ub('\236\130\183\246\152\162','\159\246\197')][ub('\19\21\2','\96')],eb[ub('D\199\191^\221\170','7\179\205')][ub('|\215j\203','\30\174')],eb[ub('\193\16\189\219\n\168','\178d\207')][ub('\188\19\190\t','\223{')],eb[ub('\140\190\154\179\157','\248\223')][ub('\152J\131@','\245%')],eb[ub('8\177.\188)','L\208')][ub('3\29 \23','C|')],eb[ub('\5\252\19\241\20','q\157')][ub('\246\20\235\244\18\235','\149f\142')],eb[ub('\208\251\198\246\193','\164\154')][ub('\170g\165\166{\162','\195\t\214')],eb[ub('\163\161\181\172\178','\215\192')][ub('\143\154U\143\148O','\236\245;')],eb[ub('e\148\139Vs\143\144Wc','\6\251\249\57')][ub('\150\170;\148\172;','\245\216^')],eb[ub('(b\229\173>y\254\172.','K\r\151\194')][ub('VWJRK','/>')],eb[ub('\152\19=\196\142\b&\197\158','\251|O\171')][ub('\22\53\173\17=\187','dP\222')],eb[ub('\218\164\b\239\204\191\19\238\220','\185\203z\128')][ub(':\149\54\138<','Y\249')],eb[ub('\219\194\170\218\194\176\202','\188\167\222')],eb[ub('\232\136\254\210\184','\138\225')][ub('?2/',']')],eb[ub('j5|o:','\b\\')][ub('t\251y\241','\22\131')],eb[ub('CRU\b\19','!;')][ub('\206\129\194\132','\172\224')],eb[ub('\22\184\0\226F','t\209')][ub('\212\210\211\213\194','\182\166')],eb[ub('8\148.\206h','Z\253')][ub('\156\96-\135u1','\238\19E')],eb[ub('\5\252\19\166U','g\149')][ub('\140\57\1\137,\29','\224Ji')],eb[ub('\2\233\20\179R','\96\128')][ub('\170\"\245\189;\226\187','\207Z\129')],{[38594]={},[11367]={{7,9,false},{5,9,true},{5,9,false},{2,4,false},{6,9,false},{5,9,false},{5,5,true},{0,9,false},{7,9,true},{0,5,true},{4,3,false},{6,4,true},{2,5,false},{4,9,true},{5,4,false},{5,9,false},{2,4,false},{2,7,false},{0,6,true},{7,0,true},{4,9,true},{6,9,true},{2,8,true},{2,7,false},{4,7,false},{5,0,true},{0,9,true},{5,7,true},{0,9,true},{6,9,true},{4,0,true},{4,6,false},{4,10,false},{7,5,false},{7,9,false},{6,0,true},{5,0,false},{5,9,true},{0,6,false},{7,9,false},{7,0,true},{4,3,false},{2,6,true},{4,8,true},{7,7,true},{2,7,true},{7,9,false},{7,7,true},{0,4,false},{7,9,false},{2,6,false},{5,3,true},{7,5,false},{7,5,false},{2,6,false},{7,9,false},{7,3,false},{6,8,false},{7,0,true},{7,9,false},{5,4,true},{7,4,true},{4,10,false},{4,10,true},{2,8,false},{0,10,false},{4,4,false},{7,5,false},{6,9,true},{4,9,true},{4,2,false},{7,5,false},{7,9,true},{7,9,false},{7,9,false},{6,0,true},{0,7,false},{7,9,false},{5,0,true},{0,0,false},{0,0,false},{7,7,true},{7,10,true},{7,9,false},{2,7,false},{7,9,false},{2,10,false},{5,6,false},{7,4,true},{2,6,false},{5,6,true},{7,9,true},{7,9,false},{4,0,false},{6,9,true},{2,10,true},{2,7,true},{5,8,true},{7,5,false},{5,10,false},{4,3,false},{7,9,false},{7,5,false},{7,4,false},{7,7,true},{7,0,true},{5,10,false},{5,9,false},{7,0,true},{7,5,false},{4,3,true},{5,9,true},{4,5,false},{7,9,false},{0,10,true},{7,6,true},{4,9,false},{2,10,true},{2,5,false},{0,6,false},{7,9,false},{5,9,false},{7,9,false},{7,9,false},{6,5,false},{5,10,true},{7,9,false},{5,4,true},{7,9,false},{7,9,false},{6,6,false},{0,10,true},{6,10,false},{0,8,false},{5,9,false},{5,8,false},{5,5,false},{7,7,false},{5,9,false},{5,9,false},{7,9,true},{5,3,false},{6,10,false},{7,3,true},{4,8,true},{6,7,true},{7,0,true},{6,6,false},{5,3,true},{7,9,false},{6,9,true},{6,6,false},{7,8,false},{7,7,true},{4,8,true},{5,9,false},{7,9,false},{6,4,true},{5,4,true},{7,7,true},{7,8,false},{2,7,true},{0,9,false},{2,0,false},{5,9,false},{2,0,true},{7,9,false},{2,4,false},{7,9,false},{5,0,true},{7,9,false},{4,6,false},{7,5,false},{4,9,false},{5,9,true},{5,4,true},{0,9,false},{7,6,true},{2,10,false},{7,9,false},{2,6,false},{6,8,true},{2,8,false},{0,10,false},{0,5,false},{2,6,true},{5,9,true},{0,6,true},{7,9,false},{0,0,false},{7,6,false},{7,7,true},{7,9,false},{0,4,false},{7,10,false},{7,1,false},{4,7,true},{5,10,false},{4,7,false},{7,5,false},{6,5,true},{4,9,false},{6,3,true},{7,9,false},{0,10,true},{4,7,false},{4,3,true},{7,9,true},{7,1,false},{5,0,true},{7,7,true},{0,5,true},{0,5,false},{7,9,false},{2,9,true},{2,5,false},{7,9,true},{0,8,false},{7,9,false},{4,7,false},{5,7,false},{4,3,false},{5,9,true},{5,9,false},{4,3,true},{7,9,false},{7,6,false},{5,5,true},{6,6,false},{2,4,false},{5,9,false},{5,3,true},{6,8,false},{5,9,true},{4,6,true},{6,9,true},{7,5,true},{7,9,false},{7,9,true},{4,6,false},{6,6,false},{5,9,true},{2,6,false},{5,9,false},{6,9,false},{7,8,false},{4,7,false},{7,5,false},{7,9,false},{6,4,false},{5,4,true},{7,0,false},{6,5,true},{0,7,false},{6,8,true},{6,10,false}},[43100]={}}local Yb=(function(tf)local oe=q[38594][tf]if(oe)then return oe end local Ld=1 local function Nd()local zf,Cd,xd,xe,Xd,Ne,ue,vc,fe,jb,Ef,O,Ff,J,S,Bd,Lc,Ta,Gd,Qf,Ma,h,Sc,td,Jd,Md,me,Ra,pd,Db,G,H;Ne,zf=function(bf,C,ib)zf[C]=ac(ib,38360)-ac(bf,54723)return zf[C]end,{};Jd=zf[15373]or Ne(4758,15373,25990)while Jd~=29236 do if Jd<34999 then if Jd>=17386 then if Jd>30524 then if Jd>32433 then if Jd<33503 then if Jd<=33081 then if Jd<=32851 then if xe==10 then Jd=zf[26764]or Ne(54777,26764,39080)continue elseif(xe==4)then Jd=zf[19038]or Ne(29134,19038,116936)continue else Jd=zf[32338]or Ne(27124,32338,73294)continue end Jd=zf[-27625]or Ne(24037,-27625,127291)else Jd,Bd=19277,gb(u_(xd,1900441409))continue end else pd=pd+Qf;J=pd if pd~=pd then Jd=zf[14734]or Ne(50860,14734,368)else Jd=1928 end end elseif Jd<34210 then if Jd>33503 then Ef,Jd=nil,zf[-25308]or Ne(27366,-25308,106459)else Ra=0;Ef,Ta,Jd,Xd=45,1,55163,49 end elseif Jd<=34210 then Jd=zf[19276]or Ne(49780,19276,37)continue else Jd,S=24804,u_(Ff,1900441409)continue end elseif Jd<=32287 then if Jd<=31584 then if Jd<=30698 then if Jd>30683 then Ta,Jd=nil,zf[6681]or Ne(51299,6681,1495)else Jd,me=zf[19298]or Ne(5434,19298,127431),ba(Bd[1],1,Bd[2])end else H[32183]=fa_(H[15123],0,1)==1;Jd,H[49434]=zf[824]or Ne(1270,824,79914),fa_(H[15123],31,1)==1 end elseif Jd<=32227 then if xe==5 then Jd=zf[-10755]or Ne(54974,-10755,7088)continue elseif(xe==2)then Jd=zf[-26890]or Ne(1568,-26890,86923)continue else Jd=zf[26216]or Ne(40101,26216,23649)continue end Jd=zf[14363]or Ne(30793,14363,73631)else Ff=0;Sc,Jd,h,Cd=75,10419,71,1 end elseif Jd>=32351 then if Jd>32351 then Jd,Lc=zf[-18431]or Ne(24391,-18431,13840),u_(fe,215)continue else Jd=zf[26999]or Ne(25874,26999,108498)continue end elseif Jd<=32309 then Jd=zf[4266]or Ne(51785,4266,23255)continue else Xd,Jd=u_(Ta,1900441409),zf[-1701]or Ne(11553,-1701,76684)continue end elseif Jd>=25322 then if Jd<28871 then if Jd>27868 then Gd=Xd if Ta~=Ta then Jd=10922 else Jd=zf[4072]or Ne(58390,4072,102423)end elseif Jd<=25844 then if Jd<=25322 then Ma[(me-64)],Jd=Nd(),zf[22490]or Ne(32082,22490,31139)else if(J>=0 and ue>Qf)or((J<0 or J~=J)and ue<Qf)then Jd=zf[14545]or Ne(7021,14545,18387)else Jd=5780 end end else fe=Df(ub('r','0'),tf,Ld);Jd,Ld=zf[4461]or Ne(9955,4461,123913),Ld+1 end elseif Jd>=29313 then if Jd<=29952 then if Jd<=29313 then ue,Jd=u_(Qf,416683216),50727 continue else if xe==6 then Jd=zf[32392]or Ne(59663,32392,20606)continue end Jd=zf[-11617]or Ne(59469,-11617,30060)end else H=Gd;Ra=Mc(Ra,R(tc(H,127),(Ma-45)*7))if(not uc(H,128))then Jd=zf[27766]or Ne(13445,27766,117411)continue else Jd=zf[14627]or Ne(14328,14627,79905)continue end Jd=zf[-1463]or Ne(43076,-1463,122013)end elseif Jd<=28871 then me=Gd if H~=H then Jd=zf[13765]or Ne(29909,13765,9081)else Jd=22372 end else Ma,Jd=nil,zf[-32276]or Ne(23978,-32276,7594)end elseif Jd>=20478 then if Jd>23990 then if Jd<=24584 then xe=Ma if Gd~=Gd then Jd=zf[-10708]or Ne(62459,-10708,12710)else Jd=13982 end else Ff=S;h,Sc=vf(Ff),false;Jd,Ra,Ef,Cd=44719,(Ff)+57,1,58 end elseif Jd>22372 then me,Jd=nil,zf[31664]or Ne(26048,31664,118681)elseif Jd>20478 then if(xe>=0 and Gd>H)or((xe<0 or xe~=xe)and Gd<H)then Jd=zf[-22916]or Ne(43772,-22916,274)else Jd=zf[-2607]or Ne(32051,-2607,105986)end else if xd then Jd=zf[3237]or Ne(45952,3237,116671)continue end Jd=zf[9122]or Ne(48079,9122,130493)end elseif Jd>=19166 then if Jd>19166 then Jd,me=zf[-25334]or Ne(60810,-25334,20151),ba(Bd[1],1,Bd[2])else Xd=Df(ub('a','#'),tf,Ld);Ld,Jd=Ld+1,43532 end elseif Jd<=17386 then Gd=Gd+xe;me=Gd if Gd~=Gd then Jd=5515 else Jd=22372 end else Ma=Ma+H;xe=Ma if Ma~=Ma then Jd=zf[28595]or Ne(57597,28595,9820)else Jd=13982 end end elseif Jd<7422 then if Jd>=3880 then if Jd<=5780 then if Jd>=5223 then if Jd<5515 then xe=H if(xe==3)then Jd=zf[-20839]or Ne(49335,-20839,13209)continue else Jd=zf[-14182]or Ne(37042,-14182,55575)continue end Jd=41766 elseif Jd>5515 then fe,Jd=nil,2271 else return{[47953]=Ma,[56095]=h,[15953]=td,[41196]=Md,[38478]=vc,[15508]=''}end elseif Jd>3880 then Jd,Db=zf[-5407]or Ne(14189,-5407,28525),u_(Md,215)continue else pd[38912]=tc(Xc(Gd,8),255);ue=tc(Xc(Gd,16),65535);pd[34353]=ue;Qf=nil;Qf=if ue<32768 then ue else ue-65536;Jd,pd[33126]=zf[-31800]or Ne(9167,-31800,119762),Qf end elseif Jd<=6468 then if Jd<=6151 then Md,S,Jd=Db,nil,32287 else fe=Lc;xd=Mc(xd,R(tc(fe,127),(J-87)*7))if not uc(fe,128)then Jd=zf[1930]or Ne(59086,1930,9396)continue end Jd=zf[5850]or Ne(19290,5850,111962)end else Jd,xd=36967,nil end elseif Jd>=1928 then if Jd<2271 then if Jd<=1928 then if(Qf>=0 and pd>ue)or((Qf<0 or Qf~=Qf)and pd<ue)then Jd=zf[8007]or Ne(25674,8007,108314)else Jd=51990 end else pd,ue=tc(Xc(me,10),1023),tc(Xc(me,0),1023);H[21531]=Ef[pd+1];Jd,H[9343]=zf[-17827]or Ne(46835,-17827,109109),Ef[ue+1]end elseif Jd>2271 then H[32183],Jd=Ef[H[33126]+1],zf[-17061]or Ne(12922,-17061,86446)else G=Df(ub('\201','\139'),tf,Ld);Ld,Jd=Ld+1,49871 end elseif Jd>=1653 then if Jd<=1653 then Ta=0;Gd,H,Jd,Ma=120,1,24584,116 else if xe==2 then Jd=zf[-18691]or Ne(2030,-18691,125049)continue elseif(xe==0)then Jd=zf[-28715]or Ne(26288,-28715,121299)continue else Jd=zf[-6946]or Ne(55897,-6946,4418)continue end Jd=zf[-21296]or Ne(45168,-21296,105729)end elseif Jd<=9 then Gd=Df(ub('d\17l','X'),tf,Ld);Ld,Jd=Ld+4,14069 else xd,Jd=u_(pd,1900441409),zf[26807]or Ne(43882,26807,110612)continue end elseif Jd<12102 then if Jd>=10505 then if Jd>10922 then xd=0;Jd,ue,Qf,pd=10641,91,1,87 elseif Jd>10641 then Xd,Ta,Ma,Jd=200,(Ff)+199,1,54761 elseif Jd>10505 then J=pd if ue~=ue then Jd=zf[20926]or Ne(56357,20926,7879)else Jd=zf[-19306]or Ne(17038,-19306,2829)end else Jd,jb=41904,nil end elseif Jd>=8972 then if Jd<=8972 then Xd,Jd=nil,zf[15721]or Ne(63877,15721,42851)else Ra=h if Sc~=Sc then Jd=zf[-19834]or Ne(28232,-19834,119844)else Jd=zf[-29274]or Ne(39218,-29274,103391)end end elseif Jd>7422 then if xe==7 then Jd=zf[2711]or Ne(52055,2711,27129)continue elseif(xe==6)then Jd=zf[7261]or Ne(52876,7261,32714)continue else Jd=zf[-11919]or Ne(7437,-11919,77907)
+--[[
+    Merged Hub - 1+ Shrink Per Step
+    Your Original Features + Updated Win Farm + Script 2 UI & Aesthetics
+    ═══════════════════════════════════════════════════════
+]]
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local Workspace = game:GetService("Workspace")
+local TeleportService = game:GetService("TeleportService")
+local Lighting = game:GetService("Lighting")
+local HttpService = game:GetService("HttpService")
+local LocalPlayer = Players.LocalPlayer
+
+-- ═══════════════════════════════════════════════════════
+-- LOAD WINDUI
+-- ═══════════════════════════════════════════════════════
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+
+-- ═══════════════════════════════════════════════════════
+-- EXECUTOR DETECTION
+-- ═══════════════════════════════════════════════════════
+local function getExecutorName()
+    if identifyexecutor then
+        local success, name = pcall(identifyexecutor)
+        if success and name and name ~= "" then return name end
+    end
+    if getexecutorname then
+        local success, name = pcall(getexecutorname)
+        if success and name and name ~= "" then return name end
+    end
+    if syn and syn.crypt and syn.crypt.custom then return "Synapse" end
+    if krnl then return "Krnl" end
+    if fluxus then return "Fluxus" end
+    if electron then return "Electron" end
+    if is_sirhurt_closure then return "SirHurt" end
+    if getgenv and getgenv().IS_SCRIPT_WARE then return "ScriptWare" end
+    if getgenv and getgenv().IS_VEGA_X then return "Vega X" end
+    if getgenv and getgenv().IS_DELTA then return "Delta" end
+    if getgenv and getgenv().IS_CODE_X then return "Code X" end
+    return "Unknown"
+end
+
+local executorName = getExecutorName()
+
+task.wait(1)
+WindUI:Notify({
+    Title = "Executor Detected",
+    Content = "Using: " .. executorName,
+    Duration = 5,
+    Icon = "terminal"
+})
+
+-- ═══════════════════════════════════════════════════════
+-- HWID & UTILITIES
+-- ═══════════════════════════════════════════════════════
+local function copyToClipboard(text)
+    if setclipboard then setclipboard(text)
+    elseif syn and syn.write_clipboard then syn.write_clipboard(text)
+    elseif toclipboard then toclipboard(text)
+    else
+        pcall(function()
+            local input = Instance.new("TextBox")
+            input.Text = text
+            input.Parent = game:GetService("CoreGui")
+            input:CaptureFocus()
+            input:SelectAll()
+            task.wait(0.1)
+            input.Parent = nil
+        end)
+    end
+end
+
+local function getHWID()
+    local success, id = pcall(function()
+        return game:GetService("RbxAnalyticsService"):GetClientId()
+    end)
+    if success and id and id ~= "" then return id end
+    success, id = pcall(function()
+        return HttpService:GenerateGUID(false)
+    end)
+    if success and id then return id end
+    return "Unknown"
+end
+
+local hwid = getHWID()
+
+local function getPing()
+    local success, stat = pcall(function()
+        return game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue()
+    end)
+    if success and type(stat) == "number" and stat > 0 then return math.floor(stat) end
+    return 0
+end
+
+local function httpGet(url)
+    if syn and syn.request then
+        local res = syn.request({ Url = url, Method = "GET" })
+        if res and res.Body then return res.Body end
+    elseif request then
+        local res = request({ Url = url, Method = "GET" })
+        if res and res.Body then return res.Body end
+    elseif http_request then
+        local res = http_request({ Url = url, Method = "GET" })
+        if res and res.Body then return res.Body end
+    end
+    return nil
+end
+
+-- ═══════════════════════════════════════════════════════
+-- LOADING SCREEN (7zxy Hub Loading)
+-- ═══════════════════════════════════════════════════════
+local function showLoadingScreen()
+    local blur = Instance.new("BlurEffect", Lighting)
+    blur.Size = 0
+    TweenService:Create(blur, TweenInfo.new(0.6), { Size = 18 }):Play()
+    
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+    screenGui.Name = "ZyroYonkIntro"
+    screenGui.ResetOnSpawn = false
+    screenGui.IgnoreGuiInset = true
+    
+    local frame = Instance.new("Frame", screenGui)
+    frame.Size = UDim2.new(1, 0, 1, 0)
+    frame.BackgroundTransparency = 1
+    
+    local bg = Instance.new("Frame", frame)
+    bg.Size = UDim2.new(1, 0, 1, 0)
+    bg.BackgroundColor3 = Color3.fromRGB(25, 0, 40)
+    bg.BackgroundTransparency = 1
+    TweenService:Create(bg, TweenInfo.new(0.8), { BackgroundTransparency = 0.2 }):Play()
+    
+    local word = "7zxy Hub"
+    local letters = {}
+    
+    for i = 1, #word do
+        local char = word:sub(i, i)
+        local label = Instance.new("TextLabel")
+        label.Text = char
+        label.Font = Enum.Font.GothamBlack
+        label.TextColor3 = Color3.new(1, 1, 1)
+        label.TextTransparency = 1
+        label.TextSize = 20
+        label.Size = UDim2.new(0, 60, 0, 60)
+        label.AnchorPoint = Vector2.new(0.5, 0.5)
+        label.Position = UDim2.new(0.5, (i - (#word / 2 + 0.5)) * 55, 0.5, 20)
+        label.BackgroundTransparency = 1
+        label.Parent = frame
+        
+        local gradient = Instance.new("UIGradient")
+        gradient.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(200, 120, 255)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(120, 0, 200))
+        })
+        gradient.Rotation = 90
+        gradient.Parent = label
+        
+        TweenService:Create(label, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+            TextTransparency = 0,
+            TextSize = 55,
+            Position = UDim2.new(0.5, (i - (#word / 2 + 0.5)) * 55, 0.5, 0)
+        }):Play()
+        
+        table.insert(letters, label)
+        task.wait(0.12)
+    end
+    
+    task.wait(2)
+    
+    for _, label in pairs(letters) do
+        TweenService:Create(label, TweenInfo.new(0.4), { TextTransparency = 1, TextSize = 20 }):Play()
+    end
+    
+    TweenService:Create(bg, TweenInfo.new(0.6), { BackgroundTransparency = 1 }):Play()
+    TweenService:Create(blur, TweenInfo.new(0.6), { Size = 0 }):Play()
+    task.wait(0.7)
+    screenGui:Destroy()
+    blur:Destroy()
+end
+
+-- ═══════════════════════════════════════════════════════
+-- THEME DESIGN (ZyroTheme)
+-- ═══════════════════════════════════════════════════════
+WindUI:AddTheme({
+    Name = "ZyroTheme",
+    Font = Font.fromName("GothamSSm", Enum.FontWeight.Medium),
+    Background = WindUI:Gradient({ ["0"] = { Color = Color3.fromHex("#1a1a1a") }, ["100"] = { Color = Color3.fromHex("#1a1a1a") } }, { Rotation = 180 }),
+    Accent = WindUI:Gradient({ ["0"] = { Color = Color3.fromHex("#2563eb") }, ["100"] = { Color = Color3.fromHex("#1d4ed8") } }, { Rotation = 90 }),
+    SideBar = WindUI:Gradient({ ["0"] = { Color = Color3.fromHex("#141414") }, ["100"] = { Color = Color3.fromHex("#141414") } }, { Rotation = 180 }),
+    Tab = WindUI:Gradient({ ["0"] = { Color = Color3.fromHex("#222222") }, ["100"] = { Color = Color3.fromHex("#222222") } }, { Rotation = 90 }),
+    Toggle = WindUI:Gradient({ ["0"] = { Color = Color3.fromHex("#16a34a") }, ["100"] = { Color = Color3.fromHex("#15803d") } }, { Rotation = 90 }),
+    Button = WindUI:Gradient({ ["0"] = { Color = Color3.fromHex("#2563eb") }, ["100"] = { Color = Color3.fromHex("#1e40af") } }, { Rotation = 135 }),
+    Text = WindUI:Gradient({ ["0"] = { Color = Color3.fromHex("#ffffff") }, ["100"] = { Color = Color3.fromHex("#d1d5db") } }, { Rotation = 90 }),
+    Icon = WindUI:Gradient({ ["0"] = { Color = Color3.fromHex("#ffffff") }, ["100"] = { Color = Color3.fromHex("#9ca3af") } }, { Rotation = 90 }),
+})
+
+-- ═══════════════════════════════════════════════════════
+-- ANTI-LAG SYSTEM
+-- ═══════════════════════════════════════════════════════
+local antiLagEnabled = false
+local antiLagConnections = {}
+local antiLagChangedProps = {}
+local oldQualityLevel = nil
+local oldSavedQualityLevel = nil
+
+local function safeGet(instance, prop)
+    local ok, val = pcall(function() return instance[prop] end)
+    return ok and val or nil
+end
+
+local function safeSet(instance, prop, val)
+    pcall(function() instance[prop] = val end)
+end
+
+local function rememberProp(instance, prop)
+    if not instance then return end
+    local data = antiLagChangedProps[instance]
+    if not data then data = {}; antiLagChangedProps[instance] = data end
+    if data[prop] == nil then data[prop] = safeGet(instance, prop) end
+end
+
+local function rememberAndSet(instance, prop, val)
+    if not instance then return end
+    rememberProp(instance, prop)
+    safeSet(instance, prop, val)
+end
+
+local function shouldSkip(instance)
+    local char = LocalPlayer.Character
+    return char and instance:IsDescendantOf(char)
+end
+
+local function optimizeInstance(instance)
+    if shouldSkip(instance) then return end
+    if instance:IsA("BasePart") then
+        rememberAndSet(instance, "Material", Enum.Material.SmoothPlastic)
+        rememberAndSet(instance, "Reflectance", 0)
+        rememberAndSet(instance, "CastShadow", false)
+        if instance:IsA("MeshPart") then
+            rememberAndSet(instance, "RenderFidelity", Enum.RenderFidelity.Performance)
+            rememberAndSet(instance, "TextureID", "")
+        end
+    elseif instance:IsA("Decal") or instance:IsA("Texture") then
+        rememberAndSet(instance, "Transparency", 1)
+    elseif instance:IsA("ParticleEmitter") or instance:IsA("Trail") or instance:IsA("Beam") or
+           instance:IsA("Smoke") or instance:IsA("Fire") or instance:IsA("Sparkles") then
+        rememberAndSet(instance, "Enabled", false)
+    elseif instance:IsA("PointLight") or instance:IsA("SpotLight") or instance:IsA("SurfaceLight") then
+        rememberAndSet(instance, "Enabled", false)
+    elseif instance:IsA("SpecialMesh") then
+        rememberAndSet(instance, "TextureId", "")
+    elseif instance:IsA("SurfaceAppearance") then
+        rememberAndSet(instance, "ColorMap", "")
+        rememberAndSet(instance, "MetalnessMap", "")
+        rememberAndSet(instance, "NormalMap", "")
+        rememberAndSet(instance, "RoughnessMap", "")
+    end
+end
+
+local function optimizeLighting()
+    rememberAndSet(Lighting, "Technology", Enum.Technology.Compatibility)
+    rememberAndSet(Lighting, "GlobalShadows", false)
+    rememberAndSet(Lighting, "FogEnd", 1e9)
+    rememberAndSet(Lighting, "ShadowSoftness", 0)
+    for _, effect in ipairs(Lighting:GetChildren()) do
+        if effect:IsA("PostEffect") then
+            rememberAndSet(effect, "Enabled", false)
+        elseif effect:IsA("Atmosphere") then
+            rememberAndSet(effect, "Density", 0)
+            rememberAndSet(effect, "Haze", 0)
+            rememberAndSet(effect, "Glare", 0)
+        elseif effect:IsA("Sky") then
+            rememberAndSet(effect, "CelestialBodiesShown", false)
+            rememberAndSet(effect, "StarCount", 0)
+        end
+    end
+end
+
+local function optimizeTerrain()
+    local terrain = Workspace:FindFirstChildOfClass("Terrain")
+    if terrain then
+        rememberAndSet(terrain, "Decoration", false)
+        rememberAndSet(terrain, "WaterWaveSize", 0)
+        rememberAndSet(terrain, "WaterWaveSpeed", 0)
+        rememberAndSet(terrain, "WaterReflectance", 0)
+        rememberAndSet(terrain, "WaterTransparency", 1)
+    end
+end
+
+local function restoreAllProperties()
+    for instance, data in pairs(antiLagChangedProps) do
+        if instance and instance.Parent then
+            for prop, val in pairs(data) do
+                safeSet(instance, prop, val)
+            end
+        end
+        antiLagChangedProps[instance] = nil
+    end
+end
+
+local function setLowestQuality()
+    pcall(function()
+        local rendering = settings().Rendering
+        if oldQualityLevel == nil then oldQualityLevel = rendering.QualityLevel end
+        rendering.QualityLevel = Enum.QualityLevel.Level01
+    end)
+    pcall(function()
+        local userGameSettings = UserSettings():GetService("UserGameSettings")
+        if oldSavedQualityLevel == nil then oldSavedQualityLevel = userGameSettings.SavedQualityLevel end
+        userGameSettings.SavedQualityLevel = Enum.SavedQualitySetting.QualityLevel1
+    end)
+end
+
+local function restoreQuality()
+    if oldQualityLevel ~= nil then
+        pcall(function() settings().Rendering.QualityLevel = oldQualityLevel end)
+    end
+    if oldSavedQualityLevel ~= nil then
+        pcall(function()
+            UserSettings():GetService("UserGameSettings").SavedQualityLevel = oldSavedQualityLevel
+        end)
+    end
+end
+
+local function enableAntiLag()
+    if antiLagEnabled then return end
+    antiLagEnabled = true
+    setLowestQuality()
+    optimizeLighting()
+    optimizeTerrain()
+    for _, inst in ipairs(Workspace:GetDescendants()) do
+        optimizeInstance(inst)
+    end
+    local conn = Workspace.DescendantAdded:Connect(function(inst)
+        if antiLagEnabled then optimizeInstance(inst) end
+    end)
+    table.insert(antiLagConnections, conn)
+    WindUI:Notify({ Title = "Anti-Lag", Content = "Enabled", Duration = 2, Icon = "zap" })
+end
+
+local function disableAntiLag()
+    if not antiLagEnabled then return end
+    antiLagEnabled = false
+    for _, conn in ipairs(antiLagConnections) do
+        pcall(function() conn:Disconnect() end)
+    end
+    antiLagConnections = {}
+    restoreAllProperties()
+    restoreQuality()
+    WindUI:Notify({ Title = "Anti-Lag", Content = "Disabled", Duration = 2, Icon = "stop" })
+end
+
+-- ═══════════════════════════════════════════════════════
+-- CONFIG & DATA MANAGEMENT
+-- ═══════════════════════════════════════════════════════
+local Config = {
+    AutoPress         = false,
+    AutoRebirth       = false,
+    PressCheckDelay   = 0.5,
+    RebirthCheckDelay = 0.5,
+    SpeedBoost        = false,
+    WalkSpeed         = 200,
+    Noclip            = false,
+    AntiAFK           = false,
+    AutoSpin          = false,
+    AutoClaim         = false,
+    AntiLag           = false,
+    WinFarm           = false,
+}
+
+local Events = ReplicatedStorage:WaitForChild("Events", 5)
+local cachedChar = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+LocalPlayer.CharacterAdded:Connect(function(char) cachedChar = char end)
+
+local function getCharacter() return cachedChar or LocalPlayer.Character end
+local function getHumanoid()
+    local char = getCharacter()
+    return char and char:FindFirstChildWhichIsA("Humanoid")
+end
+local function getRootPart()
+    local char = getCharacter()
+    return char and (char:FindFirstChild("HumanoidRootPart") or char.PrimaryPart)
+end
+
+local function fireRemote(name, ...)
+    local remote = Events and Events:FindFirstChild(tostring(name))
+    if not remote then return nil end
+    local s, r
+    if remote:IsA("RemoteEvent") then
+        s, r = pcall(function(...) remote:FireServer(...) end, ...)
+    elseif remote:IsA("RemoteFunction") then
+        s, r = pcall(function(...) return remote:InvokeServer(...) end, ...)
+    end
+    return r
+end
+
+local currentData = nil
+local function setupDataListener()
+    local updateRemote = Events and Events:FindFirstChild("UpdatePlayerData")
+    if updateRemote then
+        updateRemote.OnClientEvent:Connect(function(data) currentData = data end)
+    end
+    task.spawn(function() currentData = fireRemote("GetPlayerData") end)
+end
+setupDataListener()
+
+local BASE_LEVEL_CAP = 25
+local LEVEL_CAP_PER_REBIRTH = 25
+local PRESS_TIERS = {
+    { Name = "Obsidian", RequiredRebirths = 45 }, { Name = "Platinum", RequiredRebirths = 30 },
+    { Name = "Cheese", RequiredRebirths = 20 }, { Name = "Gold", RequiredRebirths = 15 },
+    { Name = "Red", RequiredRebirths = 5 }, { Name = "Diamond", RequiredRebirths = 3 },
+    { Name = "Silver", RequiredRebirths = 1 }, { Name = "Normal", RequiredRebirths = 0 },
+}
+
+local function getLevelCap(rebirths)
+    if rebirths == 0 then return 20 end
+    return BASE_LEVEL_CAP + LEVEL_CAP_PER_REBIRTH * rebirths
+end
+
+local function getBestPress(rebirths)
+    for _, tier in ipairs(PRESS_TIERS) do
+        if rebirths >= tier.RequiredRebirths then
+            local pressModel = Workspace:FindFirstChild("Presses")
+            local press = pressModel and pressModel:FindFirstChild(tier.Name)
+            if press then return press, tier end
+        end
+    end
+    return nil, nil
+end
+
+local function getRoomForLevel(level, world)
+    local reqs = {1, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 365, 400, 450, 510, 575, 645, 720, 800, 885}
+    local best = 0
+    for room, req in ipairs(reqs) do
+        if level >= req and (room - 1) > best then best = room - 1 end
+    end
+    return best
+end
+
+-- ═══════════════════════════════════════════════════════
+-- FEATURE ARCHITECTURE
+-- ═══════════════════════════════════════════════════════
+local featureHandles = {}
+local featureFlags = {}
+
+local function stopFeature(key)
+    featureFlags[key] = false
+    if featureHandles[key] and featureHandles[key].conn then 
+        pcall(function() featureHandles[key].conn:Disconnect() end) 
+    end
+    featureHandles[key] = nil
+    
+    if key == "AntiLag" then
+        disableAntiLag()
+    end
+end
+
+local function registerConn(key, conn)
+    stopFeature(key)
+    featureFlags[key] = true
+    featureHandles[key] = { conn = conn }
+end
+
+local function registerThread(key, fn)
+    stopFeature(key)
+    featureFlags[key] = true
+    task.spawn(function() fn(function() return featureFlags[key] and Config[key] end) end)
+end
+
+-- ═══════════════════════════════════════════════════════
+-- FEATURE IMPLEMENTATIONS
+-- ═══════════════════════════════════════════════════════
+local function startAutoPress()
+    registerThread("AutoPress", function(isRunning)
+        while isRunning() do
+            if currentData and currentData.Stats then
+                local press = getBestPress(currentData.Stats.Rebirths or 0)
+                if press then
+                    local mainPart = press:FindFirstChild("Main")
+                    local root = getRootPart()
+                    if mainPart and root and (root.Position - mainPart.Position).Magnitude > 15 then
+                        root.CFrame = mainPart.CFrame + Vector3.new(0, 5, 0)
+                    end
+                end
+            end
+            task.wait(Config.PressCheckDelay)
+        end
+    end)
+end
+
+local function startAutoRebirth()
+    registerThread("AutoRebirth", function(isRunning)
+        while isRunning() do
+            if currentData and currentData.Stats then
+                local level = currentData.Stats.Level or 0
+                local cap = getLevelCap(currentData.Stats.Rebirths or 0)
+                if level >= cap then
+                    local success = fireRemote("Rebirth")
+                    task.wait(success and 3 or 1)
+                end
+            end
+            task.wait(Config.RebirthCheckDelay)
+        end
+    end)
+end
+
+local function startSpeedBoost()
+    registerConn("SpeedBoost", RunService.Heartbeat:Connect(function()
+        if not Config.SpeedBoost then return end
+        local hum = getHumanoid()
+        if hum then hum.WalkSpeed = Config.WalkSpeed end
+    end))
+end
+
+local function startNoclip()
+    registerConn("Noclip", RunService.Stepped:Connect(function()
+        if not Config.Noclip then return end
+        local char = getCharacter()
+        if not char then return end
+        for _, part in ipairs(char:GetDescendants()) do
+            if part:IsA("BasePart") then part.CanCollide = false end
+        end
+    end))
+end
+
+local function startAntiAFK()
+    local VirtualUser = nil
+    pcall(function() VirtualUser = game:GetService("VirtualUser") end)
+    if not VirtualUser then return end
+    
+    registerConn("AntiAFK", LocalPlayer.Idled:Connect(function()
+        if not Config.AntiAFK then return end
+        pcall(function()
+            VirtualUser:CaptureController()
+            VirtualUser:ClickButton2(Vector2.new())
+        end)
+    end))
+end
+
+local function startAutoSpin()
+    registerThread("AutoSpin", function(isRunning)
+        while isRunning() do
+            if currentData and currentData.Stats and (currentData.Stats.WheelSpins or 0) > 0 then
+                fireRemote("WheelSpin")
+            end
+            task.wait(5)
+        end
+    end)
+end
+
+local function startAutoClaim()
+    registerThread("AutoClaim", function(isRunning)
+        while isRunning() do
+            fireRemote("ClaimPlaytime")
+            task.wait(30)
+        end
+    end)
+end
+
+local function startWinFarm()
+    local toggleOut = false
+    registerConn("WinFarm", RunService.Heartbeat:Connect(function()
+        if not Config.WinFarm then return end
+        if currentData and currentData.Stats then
+            local level = currentData.Stats.Level or 1
+            local rebirths = currentData.Stats.Rebirths or 0
+            local selectedWorld = rebirths >= 30 and "MoonRooms" or (rebirths >= 10 and "CheeseRooms" or "Rooms")
+            local room = getRoomForLevel(level, selectedWorld)
+            
+            local container = Workspace:FindFirstChild(selectedWorld)
+            if container then
+                local targetRoom = container:FindFirstChild(tostring(room))
+                local winPart = targetRoom and targetRoom:FindFirstChild("Win")
+                if winPart then
+                    local root = getRootPart()
+                    if root then
+                        toggleOut = not toggleOut
+                        root.CFrame = CFrame.new(winPart.Position + (toggleOut and Vector3.new(0, 6, 0) or Vector3.new(0, 3, 0)))
+                    end
+                end
+            end
+        end
+    end))
+end
+
+-- ═══════════════════════════════════════════════════════
+-- WINDUI WINDOW SETUP
+-- ═══════════════════════════════════════════════════════
+local function showGUI()
+    local Window = WindUI:CreateWindow({
+        Title = "1+ Shrink Per step",
+        Icon = "hammer",
+        Author = "By 7zxy" .. utf8.char(0xE000),
+        Folder = "7zxy Hub",
+        Size = UDim2.fromOffset(560, 380),
+        MinSize = Vector2.new(560, 350),
+        MaxSize = Vector2.new(850, 560),
+        Theme = "ZyroTheme",
+        Resizable = true,
+        SideBarWidth = 200,
+        HideSearchBar = false,
+        ScrollBarEnabled = false,
+        User = { Enabled = true, Anonymous = false, Callback = function() end },
+    })
+
+    -- VERSION & PING TAGS
+    local versionTag = Window:Tag({
+        Title = "v2.2",
+        Icon = "tag",
+        Color = Color3.fromHex("#2563eb"),
+        Radius = 100
+    })
+
+    local pingTag = Window:Tag({
+        Title = "0ms",
+        Icon = "wifi",
+        Color = Color3.fromHex("#22c55e"),
+        Radius = 100
+    })
+
+    task.spawn(function()
+        while true do
+            local ping = getPing()
+            if pingTag and pingTag.SetTitle then
+                pingTag:SetTitle(ping .. "ms")
+            end
+            task.wait(0.8)
+        end
+    end)
+
+    Window:EditOpenButton({
+        Title = "7zxy Hub Open",
+        Icon = "hammer",
+        CornerRadius = UDim.new(0, 8),
+        StrokeThickness = 1,
+        Color = ColorSequence.new(Color3.fromHex("#2563eb"), Color3.fromHex("#1d4ed8")),
+        OnlyMobile = false,
+        Enabled = true,
+        Draggable = true,
+    })
+
+    -- ═══════════════════════════════════════════════════════
+    -- TAB 1: INFORMATION
+    -- ═══════════════════════════════════════════════════════
+    local InfoTab = Window:Tab({ Title = "Information", Icon = "info" })
+    local avatarUrl = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. LocalPlayer.UserId .. "&width=100&height=100&format=png"
+    
+    InfoTab:Paragraph({
+        Title = "👋 Hi " .. LocalPlayer.Name .. "!",
+        Desc = "Welcome to 7zxy Hub.\nIf you encounter any issues, please join our Discord via the Support tab.",
+        Color = Color3.fromHex("#222222"),
+        Image = avatarUrl,
+        ImageSize = 64,
+        ThumbnailSize = 80,
+    })
+
+    Window:Divider()
+
+    InfoTab:Section({ Title = "Player Selector" })
+
+    local selectedPlayerName = nil
+    local playersDropdown = nil
+    local profileParagraph = nil
+
+    local function updateProfile(plr)
+        if not plr then
+            if profileParagraph then
+                profileParagraph:SetDesc("No player selected.")
+                profileParagraph:SetImage("")
+            end
+            return
+        end
+
+        local age = plr.AccountAge or 0
+        local avatar = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. plr.UserId .. "&width=100&height=100&format=png"
+        local desc = string.format("**Name:** %s\n**Account Age:** %d days\n**User ID:** %d", plr.Name, age, plr.UserId)
+
+        if profileParagraph then
+            profileParagraph:SetDesc(desc)
+            profileParagraph:SetImage(avatar)
+        else
+            profileParagraph = InfoTab:Paragraph({
+                Title = "Selected Player Profile",
+                Desc = desc,
+                Color = Color3.fromHex("#222222"),
+                Image = avatar,
+                ImageSize = 64,
+                ThumbnailSize = 80,
+            })
+        end
+    end
+
+    local function getPlayerNames()
+        local playerNames = {}
+        for _, p in pairs(Players:GetPlayers()) do
+            if p ~= LocalPlayer then
+                table.insert(playerNames, p.Name)
+            end
+        end
+        if #playerNames == 0 then
+            table.insert(playerNames, "No other players")
+        end
+        return playerNames
+    end
+
+    local function refreshPlayersDropdown()
+        local playerNames = getPlayerNames()
+
+        if playersDropdown then
+            playersDropdown:SetValues(playerNames)
+            if not table.find(playerNames, selectedPlayerName) then
+                selectedPlayerName = playerNames[1]
+                playersDropdown:SetValue(selectedPlayerName)
+            end
+        else
+            playersDropdown = InfoTab:Dropdown({
+                Title = "Select a player",
+                Desc = "Choose a player to view their profile and teleport to them",
+                Values = playerNames,
+                Value = playerNames[1],
+                Callback = function(option)
+                    selectedPlayerName = option
+                    local target = Players:FindFirstChild(option)
+                    updateProfile(target)
+                end
+            })
+            selectedPlayerName = playerNames[1]
+        end
+
+        local target = Players:FindFirstChild(selectedPlayerName)
+        updateProfile(target)
+    end
+
+    refreshPlayersDropdown()
+
+    Players.PlayerAdded:Connect(refreshPlayersDropdown)
+    Players.PlayerRemoving:Connect(refreshPlayersDropdown)
+
+    InfoTab:Button({
+        Title = "Refresh Players",
+        Icon = "refresh-cw",
+        Callback = function()
+            refreshPlayersDropdown()
+            WindUI:Notify({ Title = "Players Refreshed", Duration = 1, Icon = "check" })
+        end
+    })
+
+    InfoTab:Button({
+        Title = "Teleport to Player",
+        Icon = "send",
+        Callback = function()
+            if not selectedPlayerName or selectedPlayerName == "No other players" then
+                WindUI:Notify({ Title = "No player selected", Duration = 2, Icon = "alert-circle" })
+                return
+            end
+
+            local target = Players:FindFirstChild(selectedPlayerName)
+            if not target then
+                WindUI:Notify({ Title = "Player not found", Duration = 2, Icon = "alert-circle" })
+                return
+            end
+
+            local char = target.Character
+            local root = getRootPart()
+            if not char or not char:FindFirstChild("HumanoidRootPart") then
+                WindUI:Notify({ Title = "Target has no character", Duration = 2, Icon = "alert-circle" })
+                return
+            end
+            if not root then
+                WindUI:Notify({ Title = "You have no character", Duration = 2, Icon = "alert-circle" })
+                return
+            end
+
+            root.CFrame = target.Character.HumanoidRootPart.CFrame + Vector3.new(0, 2, 0)
+            WindUI:Notify({ Title = "Teleported to " .. target.Name, Duration = 2, Icon = "check" })
+        end
+    })
+
+    -- ═══════════════════════════════════════════════════════
+    -- TAB 2: MAIN FEATURES
+    -- ═══════════════════════════════════════════════════════
+    local MainTab = Window:Tab({ Title = "Main Features", Icon = "house" })
+
+    MainTab:Section({ Title = "Auto Farm" })
+
+    MainTab:Toggle({
+        Title = "Auto Press",
+        Desc = "Teleports to the best available press",
+        Default = false,
+        Callback = function(v)
+            Config.AutoPress = v
+            if v then startAutoPress() else stopFeature("AutoPress") end
+        end
+    })
+
+    MainTab:Toggle({
+        Title = "Auto Rebirth",
+        Desc = "Rebirths when level cap is reached",
+        Default = false,
+        Callback = function(v)
+            Config.AutoRebirth = v
+            if v then startAutoRebirth() else stopFeature("AutoRebirth") end
+        end
+    })
+
+    MainTab:Section({ Title = "Automation" })
+
+    MainTab:Toggle({
+        Title = "Auto Spin",
+        Default = false,
+        Callback = function(v)
+            Config.AutoSpin = v
+            if v then startAutoSpin() else stopFeature("AutoSpin") end
+        end
+    })
+
+    MainTab:Toggle({
+        Title = "Auto Claim",
+        Default = false,
+        Callback = function(v)
+            Config.AutoClaim = v
+            if v then startAutoClaim() else stopFeature("AutoClaim") end
+        end
+    })
+
+    MainTab:Section({ Title = "Room Farming (BETA)" })
+
+    MainTab:Toggle({
+        Title = "Enable Win Farm",
+        Desc = "Farms wins across standard, cheese, and moon rooms",
+        Default = false,
+        Callback = function(v)
+            Config.WinFarm = v
+            if v then startWinFarm() else stopFeature("WinFarm") end
+        end
+    })
+
+    Window:Divider()
+
+    -- ═══════════════════════════════════════════════════════
+    -- TAB 3: MOVEMENT
+    -- ═══════════════════════════════════════════════════════
+    local MovementTab = Window:Tab({ Title = "Movement", Icon = "move" })
+
+    MovementTab:Section({ Title = "Player Modifiers" })
+
+    MovementTab:Toggle({
+        Title = "Speed Boost",
+        Default = false,
+        Callback = function(v)
+            Config.SpeedBoost = v
+            if v then startSpeedBoost() else stopFeature("SpeedBoost") end
+        end
+    })
+
+    MovementTab:Slider({
+        Title = "Walk Speed",
+        Desc = "Set your movement speed (16-250)",
+        Step = 1,
+        Value = {
+            Min = 16,
+            Max = 250,
+            Default = 200,
+        },
+        Callback = function(v)
+            Config.WalkSpeed = v
+        end
+    })
+
+    MovementTab:Toggle({
+        Title = "Noclip",
+        Desc = "Walk through objects",
+        Default = false,
+        Callback = function(v)
+            Config.Noclip = v
+            if v then startNoclip() else stopFeature("Noclip") end
+        end
+    })
+
+    -- ═══════════════════════════════════════════════════════
+    -- TAB 4: MISC
+    -- ═══════════════════════════════════════════════════════
+    local MiscTab = Window:Tab({ Title = "Misc", Icon = "wrench" })
+
+    MiscTab:Section({ Title = "Optimization" })
+
+    MiscTab:Toggle({
+        Title = "Anti‑Lag",
+        Desc = "Reduces lag by optimizing rendering",
+        Default = false,
+        Callback = function(state)
+            Config.AntiLag = state
+            if state then enableAntiLag() else disableAntiLag() end
+        end
+    })
+
+    MiscTab:Section({ Title = "Protection" })
+
+    MiscTab:Toggle({
+        Title = "Anti-AFK",
+        Desc = "Prevents idle kicks",
+        Default = false,
+        Callback = function(v)
+            Config.AntiAFK = v
+            if v then startAntiAFK() else stopFeature("AntiAFK") end
+        end
+    })
+
+    MiscTab:Section({ Title = "Utility" })
+
+    MiscTab:Button({
+        Title = "Stop All Features",
+        Icon = "stop-circle",
+        Callback = function()
+            for key in pairs(Config) do
+                if Config[key] == true then
+                    stopFeature(key)
+                    Config[key] = false
+                end
+            end
+            WindUI:Notify({
+                Title = "Stopped",
+                Content = "All features disabled",
+                Duration = 2,
+                Icon = "check"
+            })
+        end
+    })
+
+    -- ═══════════════════════════════════════════════════════
+    -- TAB 5: SERVER
+    -- ═══════════════════════════════════════════════════════
+    local ServerTab = Window:Tab({ Title = "Server", Icon = "server" })
+    
+    ServerTab:Section({ Title = "Player Info" })
+    
+    local avatarUrlServer = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. LocalPlayer.UserId .. "&width=100&height=100&format=png"
+    ServerTab:Paragraph({
+        Title = "Your Details",
+        Desc = string.format("Name: %s\nAge: %d days\nHWID: %s", LocalPlayer.Name, LocalPlayer.AccountAge, hwid),
+        Color = Color3.fromHex("#222222"),
+        Image = avatarUrlServer,
+        ImageSize = 64,
+        ThumbnailSize = 80,
+    })
+    
+    ServerTab:Section({ Title = "Server Actions" })
+    
+    ServerTab:Button({ 
+        Title = "Hop Server", 
+        Icon = "repeat", 
+        Callback = function() 
+            WindUI:Notify({ Title = "Hopping...", Duration = 2 }) 
+            TeleportService:Teleport(game.PlaceId) 
+        end 
+    })
+    
+    ServerTab:Button({ 
+        Title = "Rejoin", 
+        Icon = "log-in", 
+        Callback = function() 
+            WindUI:Notify({ Title = "Rejoining...", Duration = 2 }) 
+            TeleportService:Teleport(game.PlaceId, LocalPlayer) 
+        end 
+    })
+    
+    ServerTab:Button({ 
+        Title = "Reset Character", 
+        Icon = "refresh-cw", 
+        Callback = function()
+            local char = getCharacter()
+            if char then
+                char:BreakJoints()
+                WindUI:Notify({ Title = "Reset", Content = "Respawning...", Duration = 2, Icon = "refresh-cw" })
+            else
+                WindUI:Notify({ Title = "Reset", Content = "No character.", Duration = 2, Icon = "info" })
+            end
+        end
+    })
+
+    -- ═══════════════════════════════════════════════════════
+    -- TAB 6: SUPPORT
+    -- ═══════════════════════════════════════════════════════
+    local SupportTab = Window:Tab({ Title = "Support", Icon = "heart" })
+    local InviteCode = "8mte25S8E"
+    local DiscordAPI = "https://discord.com/api/v10/invites/" .. InviteCode .. "?with_counts=true&with_expiration=true"
+
+    local raw = httpGet(DiscordAPI)
+    local Response = {}
+    if raw then pcall(function() Response = HttpService:JSONDecode(raw) end) end
+    local onlineCount = Response and Response.approximate_presence_count or "?"
+    local totalCount = Response and Response.approximate_member_count or "?"
+    local guildName = (Response and Response.guild and Response.guild.name) or "7zxy Hub Support"
+    local iconUrl = nil
+    if Response and Response.guild and Response.guild.id and Response.guild.icon then
+        iconUrl = "https://cdn.discordapp.com/icons/" .. tostring(Response.guild.id) .. "/" .. tostring(Response.guild.icon) .. ".png?size=256"
+    end
+    
+    SupportTab:Section({ Title = "Discord Server" })
+    
+    local cardProps = {
+        Title = guildName,
+        Desc = "Online: " .. tostring(onlineCount) .. "   Members: " .. tostring(totalCount) .. "\nJoin for updates & support.",
+        Color = Color3.fromHex("#222222"),
+        ImageSize = 64,
+        ThumbnailSize = 100,
+        Buttons = {
+            { 
+                Title = "Copy Invite", 
+                Callback = function() 
+                    copyToClipboard("https://discord.gg/" .. InviteCode)
+                    WindUI:Notify({ Title = "Copied!", Duration = 2, Icon = "clipboard-check" }) 
+                end 
+            },
+            { 
+                Title = "Join Discord", 
+                Callback = function() 
+                    if openUrl then 
+                        openUrl("https://discord.gg/" .. InviteCode) 
+                    else 
+                        copyToClipboard("https://discord.gg/" .. InviteCode)
+                        WindUI:Notify({ Title = "Link Copied", Duration = 2, Icon = "globe" }) 
+                    end 
+                end 
+            }
+        }
+    }
+    if iconUrl then cardProps.Image = iconUrl end
+    SupportTab:Paragraph(cardProps)
+    
+    SupportTab:Section({ Title = "Help" })
+    
+    SupportTab:Paragraph({ 
+        Title = "Executor", 
+        Desc = "Using: " .. executorName, 
+        Color = Color3.fromHex("#222222") 
+    })
+    
+    SupportTab:Button({ 
+        Title = "Report Bug", 
+        Icon = "bug", 
+        Callback = function()
+            copyToClipboard("Bug Report\nExecutor: " .. executorName .. "\nScript: 7zxy Hub v2.2\n\nDescribe:")
+            WindUI:Notify({ Title = "Template Copied", Content = "Paste in Discord.", Duration = 4, Icon = "message-square" })
+        end
+    })
+end
+
+showLoadingScreen()
+task.wait(2.5)
+showGUI()
