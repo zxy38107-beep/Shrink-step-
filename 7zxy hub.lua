@@ -360,6 +360,7 @@ end
 local Config = {
     AutoPress         = false,
     AutoRebirth       = false,
+    AutoBuyCubes      = false,
     PressCheckDelay   = 0.5,
     RebirthCheckDelay = 0.5,
     SpeedBoost        = false,
@@ -433,30 +434,30 @@ local function getBestPress(rebirths)
     return nil, nil
 end
 
--- ===== WIN FARM STATE =====
+-- ===== WIN FARM STATE (UPDATED ACCURATE VALUES) =====
 local ROOM_LEVELS = {
     Rooms = {
         [0] = 1,   [1] = 25,  [2] = 50,  [3] = 75,  [4] = 100,
         [5] = 125, [6] = 150, [7] = 175, [8] = 200, [9] = 225,
-        [10] = 250,[11] = 275,[12] = 300,[13] = 325,[14] = 365,
+        [10] = 250,[11] = 275,[12] = 300,[13] = 343,[14] = 365,
         [15] = 400,[16] = 450,[17] = 510,[18] = 575,[19] = 645,
-        [20] = 720,[21] = 800,[22] = 885,
+        [20] = 720,[21] = 800,[22] = 800,
     },
     CheeseRooms = {
         [0] = 1,   [1] = 25,  [2] = 50,  [3] = 75,  [4] = 100,
         [5] = 125, [6] = 150, [7] = 175, [8] = 200, [9] = 225,
-        [10] = 250,[11] = 275,[12] = 300,[13] = 325,[14] = 365,
+        [10] = 250,[11] = 275,[12] = 300,[13] = 343,[14] = 365,
         [15] = 400,[16] = 450,[17] = 510,[18] = 575,[19] = 645,
-        [20] = 720,[21] = 800,[22] = 885,[23] = 975,[24] = 1070,
-        [25] = 1170,
+        [20] = 720,[21] = 800,[22] = 900,[23] = 1000,[24] = 1111,
+        [25] = 1111,
     },
     MoonRooms = {
         [0] = 1,   [1] = 25,  [2] = 50,  [3] = 75,  [4] = 100,
         [5] = 125, [6] = 150, [7] = 175, [8] = 200, [9] = 225,
-        [10] = 250,[11] = 275,[12] = 300,[13] = 325,[14] = 365,
+        [10] = 250,[11] = 275,[12] = 300,[13] = 343,[14] = 365,
         [15] = 400,[16] = 450,[17] = 510,[18] = 575,[19] = 645,
         [20] = 720,[21] = 800,[22] = 900,[23] = 1000,[24] = 1111,
-        [25] = 1250,[26] = 1275,[27] = 1385,[28] = 1500,
+        [25] = 1250,[26] = 1400,[27] = 1600,[28] = 1600,
     }
 }
 
@@ -536,6 +537,25 @@ local function startAutoRebirth()
     end)
 end
 
+local function startAutoBuyCubes()
+    registerThread("AutoBuyCubes", function(isRunning)
+        local eventsFolder = ReplicatedStorage:FindFirstChild("Events")
+        local upgradeRemote = eventsFolder and eventsFolder:FindFirstChild("Upgraded")
+        
+        while isRunning() do
+            if upgradeRemote then
+                -- Loops through from best to worst to force highest upgrade
+                for i = 50, 1, -1 do
+                    pcall(function()
+                        upgradeRemote:FireServer(tostring(i))
+                    end)
+                end
+            end
+            task.wait(5)
+        end
+    end)
+end
+
 local function startSpeedBoost()
     registerConn("SpeedBoost", RunService.Heartbeat:Connect(function()
         if not Config.SpeedBoost then return end
@@ -596,18 +616,28 @@ local function startWinFarm()
         if currentData and currentData.Stats then
             local level = currentData.Stats.Level or 1
             local rebirths = currentData.Stats.Rebirths or 0
-            local selectedWorld = rebirths >= 30 and "MoonRooms" or (rebirths >= 10 and "CheeseRooms" or "Rooms")
-            local room = getRoomForLevel(level, selectedWorld)
             
+            -- Route correctly based on Rebirths
+            local selectedWorld = "Rooms"
+            if rebirths >= 30 then
+                selectedWorld = "MoonRooms"
+            elseif rebirths >= 10 then
+                selectedWorld = "CheeseRooms"
+            end
+            
+            local room = getRoomForLevel(level, selectedWorld)
             local container = Workspace:FindFirstChild(selectedWorld)
+            
             if container then
                 local targetRoom = container:FindFirstChild(tostring(room))
-                local winPart = targetRoom and targetRoom:FindFirstChild("Win")
+                -- The game uses either "Win" or "WinRobux" depending on the world
+                local winPart = targetRoom and (targetRoom:FindFirstChild("Win") or targetRoom:FindFirstChild("WinRobux"))
+                
                 if winPart then
                     local root = getRootPart()
                     if root then
                         toggleOut = not toggleOut
-                        root.CFrame = CFrame.new(winPart.Position + (toggleOut and Vector3.new(0, 6, 0) or Vector3.new(0, 3, 0)))
+                        root.CFrame = CFrame.new(winPart.Position + (toggleOut and Vector3.new(0, 5, 0) or Vector3.new(0, 3, 0)))
                     end
                 end
             end
@@ -814,6 +844,16 @@ local function showGUI()
     local MainTab = Window:Tab({ Title = "Main Features", Icon = "house" })
 
     MainTab:Section({ Title = "Auto Farm" })
+    
+    MainTab:Toggle({
+        Title = "Enable Win Farm",
+        Desc = "Farms wins across standard, cheese, and moon rooms dynamically",
+        Default = false,
+        Callback = function(v)
+            Config.WinFarm = v
+            if v then startWinFarm() else stopFeature("WinFarm") end
+        end
+    })
 
     MainTab:Toggle({
         Title = "Auto Press",
@@ -834,6 +874,16 @@ local function showGUI()
             if v then startAutoRebirth() else stopFeature("AutoRebirth") end
         end
     })
+    
+    MainTab:Toggle({
+        Title = "Auto Buy Shrink Cubes",
+        Desc = "Automatically buys your highest unlocked shrink cube",
+        Default = false,
+        Callback = function(v)
+            Config.AutoBuyCubes = v
+            if v then startAutoBuyCubes() else stopFeature("AutoBuyCubes") end
+        end
+    })
 
     MainTab:Section({ Title = "Automation" })
 
@@ -852,18 +902,6 @@ local function showGUI()
         Callback = function(v)
             Config.AutoClaim = v
             if v then startAutoClaim() else stopFeature("AutoClaim") end
-        end
-    })
-
-    MainTab:Section({ Title = "Room Farming" })
-
-    MainTab:Toggle({
-        Title = "Enable Win Farm",
-        Desc = "Farms wins across standard, cheese, and moon rooms dynamically",
-        Default = false,
-        Callback = function(v)
-            Config.WinFarm = v
-            if v then startWinFarm() else stopFeature("WinFarm") end
         end
     })
 
