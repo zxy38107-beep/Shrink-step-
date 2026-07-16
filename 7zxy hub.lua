@@ -433,11 +433,38 @@ local function getBestPress(rebirths)
     return nil, nil
 end
 
+-- ===== WIN FARM STATE =====
+local ROOM_LEVELS = {
+    Rooms = {
+        [0] = 1,   [1] = 25,  [2] = 50,  [3] = 75,  [4] = 100,
+        [5] = 125, [6] = 150, [7] = 175, [8] = 200, [9] = 225,
+        [10] = 250,[11] = 275,[12] = 300,[13] = 325,[14] = 365,
+        [15] = 400,[16] = 450,[17] = 510,[18] = 575,[19] = 645,
+        [20] = 720,[21] = 800,[22] = 885,
+    },
+    CheeseRooms = {
+        [0] = 1,   [1] = 25,  [2] = 50,  [3] = 75,  [4] = 100,
+        [5] = 125, [6] = 150, [7] = 175, [8] = 200, [9] = 225,
+        [10] = 250,[11] = 275,[12] = 300,[13] = 325,[14] = 365,
+        [15] = 400,[16] = 450,[17] = 510,[18] = 575,[19] = 645,
+        [20] = 720,[21] = 800,[22] = 885,[23] = 975,[24] = 1070,
+        [25] = 1170,
+    },
+    MoonRooms = {
+        [0] = 1,   [1] = 25,  [2] = 50,  [3] = 75,  [4] = 100,
+        [5] = 125, [6] = 150, [7] = 175, [8] = 200, [9] = 225,
+        [10] = 250,[11] = 275,[12] = 300,[13] = 325,[14] = 365,
+        [15] = 400,[16] = 450,[17] = 510,[18] = 575,[19] = 645,
+        [20] = 720,[21] = 800,[22] = 900,[23] = 1000,[24] = 1111,
+        [25] = 1250,[26] = 1275,[27] = 1385,[28] = 1500,
+    }
+}
+
 local function getRoomForLevel(level, world)
-    local reqs = {1, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 365, 400, 450, 510, 575, 645, 720, 800, 885}
+    local world_data = ROOM_LEVELS[world] or ROOM_LEVELS["Rooms"]
     local best = 0
-    for room, req in ipairs(reqs) do
-        if level >= req and (room - 1) > best then best = room - 1 end
+    for room, req in pairs(world_data) do
+        if level >= req and room > best then best = room end
     end
     return best
 end
@@ -828,11 +855,11 @@ local function showGUI()
         end
     })
 
-    MainTab:Section({ Title = "Room Farming (BETA)" })
+    MainTab:Section({ Title = "Room Farming" })
 
     MainTab:Toggle({
         Title = "Enable Win Farm",
-        Desc = "Farms wins across standard, cheese, and moon rooms",
+        Desc = "Farms wins across standard, cheese, and moon rooms dynamically",
         Default = false,
         Callback = function(v)
             Config.WinFarm = v
@@ -890,7 +917,7 @@ local function showGUI()
     MiscTab:Section({ Title = "Optimization" })
 
     MiscTab:Toggle({
-        Title = "Anti‑Lag",
+        Title = "Anti-Lag",
         Desc = "Reduces lag by optimizing rendering",
         Default = false,
         Callback = function(state)
