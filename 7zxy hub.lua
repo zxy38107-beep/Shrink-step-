@@ -1,6 +1,6 @@
 --[[
-    Merged Hub - 1+ Shrink Per Step
-    Your Original Features + Updated Win Farm + Script 2 UI & Aesthetics
+    7zxy Hub - 1+ Shrink Per Step
+    Rewrote UI implemented wind UI and Zyro Yonk UI used.
     ═══════════════════════════════════════════════════════
 ]]
 
