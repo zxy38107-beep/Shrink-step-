@@ -412,7 +412,7 @@ setupDataListener()
 local BASE_LEVEL_CAP = 25
 local LEVEL_CAP_PER_REBIRTH = 25
 local PRESS_TIERS = {
-    { Name = "Obsidian", RequiredRebirths = 45 }, { Name = "Platinum", RequiredRebirths = 30 },
+    { Name = "Obsidian", RequiredRebirths = 60 }, { Name = "Platinum", RequiredRebirths = 45 },
     { Name = "Cheese", RequiredRebirths = 20 }, { Name = "Gold", RequiredRebirths = 15 },
     { Name = "Red", RequiredRebirths = 5 }, { Name = "Diamond", RequiredRebirths = 3 },
     { Name = "Silver", RequiredRebirths = 1 }, { Name = "Normal", RequiredRebirths = 0 },
