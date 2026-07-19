@@ -619,9 +619,9 @@ local function startWinFarm()
             
             -- Route correctly based on Rebirths
             local selectedWorld = "Rooms"
-            if rebirths >= 30 then
+            if rebirths >= 45 then
                 selectedWorld = "MoonRooms"
-            elseif rebirths >= 10 then
+            elseif rebirths >= 15 then
                 selectedWorld = "CheeseRooms"
             end
             
