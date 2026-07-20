@@ -1,6 +1,6 @@
 --[[
     7zxy Hub - 1+ Shrink Per Step
-    Rewrote UI and updated to current game version.
+    Rewrote UI and updated to latest game version
     ═══════════════════════════════════════════════════════
 ]]
 
