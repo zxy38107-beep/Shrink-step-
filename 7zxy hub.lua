@@ -1,6 +1,6 @@
 --[[
     7zxy Hub - 1+ Shrink Per Step
-    Rewrote UI and updated to version V2.1
+    Rewrote UI and updated to version V2.2
     ═══════════════════════════════════════════════════════
 ]]
 
