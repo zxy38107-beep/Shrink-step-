@@ -80,7 +80,7 @@ def send_discord_alert(repo_name, pusher, branch, commits, role_id):
         "embeds": [{
             "title": f"📝 {repo_name} Updated",
             "description": f"Pushed by **{pusher}** to `{branch}`",
-            "color": 3066993,
+            "color": 5763719,
             "fields": [
                 {
                     "name": "Changelog",
