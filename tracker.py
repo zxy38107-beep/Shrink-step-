@@ -5,9 +5,8 @@ from flask import Flask, request
 # ==========================================
 # CONFIGURATION
 # ==========================================
-WEBHOOK_URL = "PASTE_YOUR_DISCORD_WEBHOOK_HERE"
-GITHUB_ROLE_ID = "PASTE_YOUR_ROLE_ID_HERE"
-
+WEBHOOK_URL = "https://discord.com/api/webhooks/1508723797166002186/gW9QsWmFD-QQort2WaW9sJSAmQJbexiurG-OrhXUMAhvqAz1qJEAetxTdb5fGCR2KlLw"
+GITHUB_ROLE_ID = "1518777635587756132"
 WATCHED_FILES = [
     "7zxy hub.lua"
 ]
