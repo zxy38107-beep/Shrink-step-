@@ -1,6 +1,6 @@
 --[[
     7zxy Hub - 1+ Shrink Per Step
-    Rewrote UI implemented wind UI and Zyro Yonk UI used.
+    Rewrote UI and updated to current game version.
     ═══════════════════════════════════════════════════════
 ]]
 
