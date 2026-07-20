@@ -5,8 +5,8 @@ from flask import Flask, request
 # ==========================================
 # CONFIGURATION
 # ==========================================
-WEBHOOK_URL = "https://discord.com/api/webhooks/1508723797166002186/gW9QsWmFD-QQort2WaW9sJSAmQJbexiurG-OrhXUMAhvqAz1qJEAetxTdb5fGCR2KlLw"
-GITHUB_ROLE_ID = "1518777635587756132"
+WEBHOOK_URL = "PASTE_YOUR_DISCORD_WEBHOOK_HERE"
+GITHUB_ROLE_ID = "PASTE_YOUR_ROLE_ID_HERE"
 
 WATCHED_FILES = [
     "7zxy hub.lua"
@@ -72,23 +72,43 @@ def send_discord_alert(repo_name, pusher, branch, commits, role_id):
         changelog_lines.append(f"• ... and {len(commits) - 3} more changes")
     
     changelog_text = "\n".join(changelog_lines)
-    role_mention = f"<@&{role_id}>" if role_id else ""
+    role_mention = f"<@&{role_id}>" if role_id else "@everyone"
     
     data = {
         "username": "Script Updates",
         "content": role_mention,
         "embeds": [{
-            "title": f"📝 {repo_name} Updated",
-            "description": f"Pushed by **{pusher}** to `{branch}`",
+            "title": "UPDATE",
+            "description": "",
             "color": 5763719,
             "fields": [
+                {
+                    "name": "Status",
+                    "value": "🟢 Live",
+                    "inline": True
+                },
+                {
+                    "name": "Repository",
+                    "value": f"`{repo_name}`",
+                    "inline": True
+                },
+                {
+                    "name": "Pushed By",
+                    "value": f"**{pusher}**",
+                    "inline": True
+                },
+                {
+                    "name": "Branch",
+                    "value": f"`{branch}`",
+                    "inline": True
+                },
                 {
                     "name": "Changelog",
                     "value": f"```{changelog_text}```",
                     "inline": False
                 },
                 {
-                    "name": "Commits",
+                    "name": "Commit Count",
                     "value": f"`{len(commits)}`",
                     "inline": True
                 }
