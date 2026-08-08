@@ -1,6 +1,6 @@
 --[[
     7zxy Hub - 1+ Shrink Per Step
-    Rewrote UI and updated to version V2.3
+    Rewrote UI implemented wind UI and Zyro Yonk UI used.
     ═══════════════════════════════════════════════════════
 ]]
 
@@ -371,6 +371,9 @@ local Config = {
     AutoClaim         = false,
     AntiLag           = false,
     WinFarm           = false,
+    AutoEquipCube     = false,
+    AutoAscension     = false,
+    AutoQuestClaim    = false,
 }
 
 local Events = ReplicatedStorage:WaitForChild("Events", 5)
@@ -412,6 +415,7 @@ setupDataListener()
 local BASE_LEVEL_CAP = 25
 local LEVEL_CAP_PER_REBIRTH = 25
 local PRESS_TIERS = {
+    { Name = "Stone", RequiredRebirths = 80 }, { Name = "Sand", RequiredRebirths = 55 },
     { Name = "Obsidian", RequiredRebirths = 50 }, { Name = "Platinum", RequiredRebirths = 37 },
     { Name = "Cheese", RequiredRebirths = 20 }, { Name = "Gold", RequiredRebirths = 15 },
     { Name = "Red", RequiredRebirths = 5 }, { Name = "Diamond", RequiredRebirths = 3 },
@@ -421,6 +425,10 @@ local PRESS_TIERS = {
 local function getLevelCap(rebirths)
     if rebirths == 0 then return 20 end
     return BASE_LEVEL_CAP + LEVEL_CAP_PER_REBIRTH * rebirths
+end
+
+local function getRebirthCap(ascensions)
+    return 75 + 25 * (ascensions or 0)
 end
 
 local function getBestPress(rebirths)
@@ -458,6 +466,15 @@ local ROOM_LEVELS = {
         [15] = 400,[16] = 450,[17] = 510,[18] = 575,[19] = 645,
         [20] = 720,[21] = 800,[22] = 900,[23] = 1000,[24] = 1111,
         [25] = 1250,[26] = 1400,[27] = 1600,[28] = 1600,
+    },
+    JupiterRooms = {
+        [0] = 1,   [1] = 25,  [2] = 50,  [3] = 75,  [4] = 100,
+        [5] = 125, [6] = 150, [7] = 175, [8] = 200, [9] = 225,
+        [10] = 250,[11] = 275,[12] = 300,[13] = 343,[14] = 365,
+        [15] = 400,[16] = 450,[17] = 510,[18] = 575,[19] = 645,
+        [20] = 720,[21] = 800,[22] = 900,[23] = 1000,[24] = 1111,
+        [25] = 1250,[26] = 1400,[27] = 1600,[28] = 1800,[29] = 2000,
+        [30] = 2222,[31] = 2222,
     }
 }
 
@@ -503,10 +520,13 @@ end
 -- ═══════════════════════════════════════════════════════
 -- FEATURE IMPLEMENTATIONS
 -- ═══════════════════════════════════════════════════════
+
+local pauseMovement = false
+
 local function startAutoPress()
     registerThread("AutoPress", function(isRunning)
         while isRunning() do
-            if currentData and currentData.Stats then
+            if currentData and currentData.Stats and not pauseMovement then
                 local press = getBestPress(currentData.Stats.Rebirths or 0)
                 if press then
                     local mainPart = press:FindFirstChild("Main")
@@ -552,6 +572,59 @@ local function startAutoBuyCubes()
                 end
             end
             task.wait(5)
+        end
+    end)
+end
+
+local function startAutoEquipCube()
+    registerThread("AutoEquipCube", function(isRunning)
+        local CollectionService = game:GetService("CollectionService")
+        while isRunning() do
+            if currentData and currentData.Stats then
+                local wins = currentData.Stats.Wins or 0
+                local equipped = currentData.Stats.EquippedItem
+                
+                local bestReq = -math.huge
+                local bestPrompt = nil
+                local bestName = nil
+                
+                for _, j in ipairs(CollectionService:GetTagged("ItemNode")) do
+                    local parent = j.Parent
+                    if parent then
+                        local req = parent:GetAttribute("Requirement")
+                        local name = parent:GetAttribute("Name")
+                        
+                        if req and name and req <= wins and req >= 0 then
+                            if req > bestReq then
+                                bestReq = req
+                                bestName = name
+                                local mainAttach = parent.Parent and parent.Parent:FindFirstChild("Attachment")
+                                if mainAttach then
+                                    bestPrompt = mainAttach:FindFirstChild("Buy")
+                                end
+                            end
+                        end
+                    end
+                end
+                
+                if bestPrompt and bestName and equipped ~= bestName then
+                    local root = getRootPart()
+                    if root then
+                        local originalCFrame = root.CFrame
+                        local promptPart = bestPrompt.Parent and bestPrompt.Parent.Parent
+                        if promptPart and typeof(promptPart) == "Instance" and promptPart:IsA("BasePart") then
+                            pauseMovement = true
+                            root.CFrame = promptPart.CFrame
+                            task.wait(0.3)
+                            pcall(function() fireproximityprompt(bestPrompt) end)
+                            task.wait(0.2)
+                            root.CFrame = originalCFrame
+                            pauseMovement = false
+                        end
+                    end
+                end
+            end
+            task.wait(1)
         end
     end)
 end
@@ -603,8 +676,50 @@ end
 local function startAutoClaim()
     registerThread("AutoClaim", function(isRunning)
         while isRunning() do
-            fireRemote("ClaimPlaytime")
+            pcall(function() fireRemote("FreeGift", "Claim") end)
+            pcall(function()
+                local day = fireRemote("DailyRewards", {Type = "Learn"})
+                if day then
+                    fireRemote("DailyRewards", {Type = "Claim", Day = day})
+                end
+            end)
             task.wait(30)
+        end
+    end)
+end
+
+local function startAutoQuestClaim()
+    registerThread("AutoQuestClaim", function(isRunning)
+        while isRunning() do
+            if currentData and currentData.Quests then
+                for _, category in ipairs({"Daily", "Weekly"}) do
+                    local cat = currentData.Quests[category]
+                    if cat and cat.Active and cat.Goals and cat.Progress then
+                        for _, questId in ipairs(cat.Active) do
+                            local goals = cat.Goals[questId]
+                            local progress = cat.Progress[questId]
+                            local claimed = cat.Claimed and cat.Claimed[questId]
+                            
+                            if not claimed and goals and progress then
+                                local allDone = true
+                                for i, goal in ipairs(goals) do
+                                    if (progress[i] or 0) < goal then
+                                        allDone = false
+                                        break
+                                    end
+                                end
+                                if allDone then
+                                    pcall(function()
+                                        fireRemote("Quests", {Type = "Claim", Category = category, Id = questId})
+                                    end)
+                                    task.wait(0.5)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+            task.wait(10)
         end
     end)
 end
@@ -612,14 +727,17 @@ end
 local function startWinFarm()
     local toggleOut = false
     registerConn("WinFarm", RunService.Heartbeat:Connect(function()
-        if not Config.WinFarm then return end
+        if not Config.WinFarm or pauseMovement then return end
         if currentData and currentData.Stats then
             local level = currentData.Stats.Level or 1
             local rebirths = currentData.Stats.Rebirths or 0
             
-            -- Route correctly based on Rebirths
+            -- Route correctly based on Rebirths and Ascensions
+            local ascensions = currentData.Stats.Ascensions or 0
             local selectedWorld = "Rooms"
-            if rebirths >= 37 then
+            if rebirths >= 55 and ascensions >= 1 then
+                selectedWorld = "JupiterRooms"
+            elseif rebirths >= 37 then
                 selectedWorld = "MoonRooms"
             elseif rebirths >= 15 then
                 selectedWorld = "CheeseRooms"
@@ -645,6 +763,23 @@ local function startWinFarm()
     end))
 end
 
+local function startAutoAscension()
+    registerThread("AutoAscension", function(isRunning)
+        while isRunning() do
+            if currentData and currentData.Stats then
+                local rebirths = currentData.Stats.Rebirths or 0
+                local ascensions = currentData.Stats.Ascensions or 0
+                local cap = getRebirthCap(ascensions)
+                if rebirths >= cap then
+                    local success = fireRemote("Ascend")
+                    task.wait(success and 3 or 1)
+                end
+            end
+            task.wait(1)
+        end
+    end)
+end
+
 -- ═══════════════════════════════════════════════════════
 -- WINDUI WINDOW SETUP
 -- ═══════════════════════════════════════════════════════
@@ -667,7 +802,7 @@ local function showGUI()
 
     -- VERSION & PING TAGS
     local versionTag = Window:Tag({
-        Title = "v2.2",
+        Title = "v2.4",
         Icon = "tag",
         Color = Color3.fromHex("#2563eb"),
         Radius = 100
@@ -845,6 +980,7 @@ local function showGUI()
 
     MainTab:Section({ Title = "Auto Farm" })
     
+
     MainTab:Toggle({
         Title = "Enable Win Farm",
         Desc = "Farms wins across standard, cheese, and moon rooms dynamically",
@@ -874,6 +1010,16 @@ local function showGUI()
             if v then startAutoRebirth() else stopFeature("AutoRebirth") end
         end
     })
+
+    MainTab:Toggle({
+        Title = "Auto Ascension",
+        Desc = "Ascends when rebirth cap is reached (resets progress for x1.3 Shrink boost)",
+        Default = false,
+        Callback = function(v)
+            Config.AutoAscension = v
+            if v then startAutoAscension() else stopFeature("AutoAscension") end
+        end
+    })
     
     MainTab:Toggle({
         Title = "Auto Buy Shrink Cubes",
@@ -882,6 +1028,16 @@ local function showGUI()
         Callback = function(v)
             Config.AutoBuyCubes = v
             if v then startAutoBuyCubes() else stopFeature("AutoBuyCubes") end
+        end
+    })
+
+    MainTab:Toggle({
+        Title = "Auto Equip Best Cube",
+        Desc = "Automatically equips the highest shrink cube you have unlocked",
+        Default = false,
+        Callback = function(v)
+            Config.AutoEquipCube = v
+            if v then startAutoEquipCube() else stopFeature("AutoEquipCube") end
         end
     })
 
@@ -902,6 +1058,16 @@ local function showGUI()
         Callback = function(v)
             Config.AutoClaim = v
             if v then startAutoClaim() else stopFeature("AutoClaim") end
+        end
+    })
+
+    MainTab:Toggle({
+        Title = "Auto Quest Claim",
+        Desc = "Automatically claims completed daily and weekly quest rewards",
+        Default = false,
+        Callback = function(v)
+            Config.AutoQuestClaim = v
+            if v then startAutoQuestClaim() else stopFeature("AutoQuestClaim") end
         end
     })
 
@@ -1110,7 +1276,7 @@ local function showGUI()
         Title = "Report Bug", 
         Icon = "bug", 
         Callback = function()
-            copyToClipboard("Bug Report\nExecutor: " .. executorName .. "\nScript: 7zxy Hub v2.2\n\nDescribe:")
+            copyToClipboard("Bug Report\nExecutor: " .. executorName .. "\nScript: 7zxy Hub v2.4\n\nDescribe:")
             WindUI:Notify({ Title = "Template Copied", Content = "Paste in Discord.", Duration = 4, Icon = "message-square" })
         end
     })
