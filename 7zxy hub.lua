@@ -28,7 +28,6 @@ local THEME = {
     Primary = Color3.fromRGB(37, 99, 235),
     PrimaryDark = Color3.fromRGB(29, 78, 216),
     Success = Color3.fromRGB(22, 163, 74),
-    SuccessDark = Color3.fromRGB(21, 128, 61),
     Text = Color3.fromRGB(255, 255, 255),
     TextSecondary = Color3.fromRGB(209, 213, 219),
     Border = Color3.fromRGB(50, 50, 50),
@@ -449,83 +448,598 @@ function SevenZxyUI:CreateWindow(opts)
 
         local tabAPI = {_page = tabPage, _layout = pageLayout}
 
+        -- SECTION: Purely visual header, matches original WindUI behavior
         function tabAPI:Section(secOpts)
             secOpts = secOpts or {}
             local container = Instance.new("Frame")
             container.Name = "Section_" .. (secOpts.Title or "")
-            container.Size = UDim2.new(1, 0, 0, 32)
+            container.Size = UDim2.new(1, 0, 0, 28)
+            container.BackgroundTransparency = 1
+            container.LayoutOrder = #tabPage:GetChildren()
+            container.Parent = tabPage
+
+            local lbl = Instance.new("TextLabel")
+            lbl.Size = UDim2.new(1, 0, 1, 0)
+            lbl.BackgroundTransparency = 1
+            lbl.Text = secOpts.Title or ""
+            lbl.TextColor3 = THEME.TextSecondary
+            lbl.TextSize = 12
+            lbl.Font = Enum.Font.GothamBold
+            lbl.TextXAlignment = Enum.TextXAlignment.Left
+            lbl.Parent = container
+
+            local line = Instance.new("Frame")
+            line.Size = UDim2.new(1, 0, 0, 1)
+            line.Position = UDim2.new(0, 0, 1, -1)
+            line.BackgroundColor3 = THEME.Border
+            line.BorderSizePixel = 0
+            line.Parent = container
+
+            return container
+        end
+
+        function tabAPI:Toggle(togOpts)
+            togOpts = togOpts or {}
+            local saveKey = togOpts.SaveKey
+            local default = togOpts.Default or false
+            if saveKey then default = SevenZxyUI:GetSaved(saveKey, default) end
+
+            local container = Instance.new("Frame")
+            container.Name = "Toggle_" .. (togOpts.Title or "")
+            container.Size = UDim2.new(1, 0, 0, 44)
             container.BackgroundColor3 = THEME.Surface
             container.BorderSizePixel = 0
-            container.ClipsDescendants = true
             container.LayoutOrder = #tabPage:GetChildren()
             container.Parent = tabPage
             Instance.new("UICorner", container).CornerRadius = THEME.CornerRadius
 
-            local header = Instance.new("TextButton")
-            header.Size = UDim2.new(1, 0, 0, 32)
-            header.BackgroundTransparency = 1
-            header.Text = ""
-            header.AutoButtonColor = false
-            header.Parent = container
+            local textLabel = Instance.new("TextLabel")
+            textLabel.Size = UDim2.new(1, -60, 0, 20)
+            textLabel.Position = UDim2.new(0, 14, 0, 6)
+            textLabel.BackgroundTransparency = 1
+            textLabel.Text = togOpts.Title or ""
+            textLabel.TextColor3 = THEME.Text
+            textLabel.TextSize = 13
+            textLabel.Font = THEME.Font
+            textLabel.TextXAlignment = Enum.TextXAlignment.Left
+            textLabel.Parent = container
 
-            local secTitle = Instance.new("TextLabel")
-            secTitle.Size = UDim2.new(1, -40, 1, 0)
-            secTitle.Position = UDim2.new(0, 14, 0, 0)
-            secTitle.BackgroundTransparency = 1
-            secTitle.Text = secOpts.Title or ""
-            secTitle.TextColor3 = THEME.Text
-            secTitle.TextSize = 14
-            secTitle.Font = Enum.Font.GothamBold
-            secTitle.TextXAlignment = Enum.TextXAlignment.Left
-            secTitle.Parent = header
+            local descLabel = Instance.new("TextLabel")
+            descLabel.Size = UDim2.new(1, -60, 0, 14)
+            descLabel.Position = UDim2.new(0, 14, 0, 26)
+            descLabel.BackgroundTransparency = 1
+            descLabel.Text = togOpts.Desc or ""
+            descLabel.TextColor3 = THEME.TextSecondary
+            descLabel.TextSize = 11
+            descLabel.Font = THEME.Font
+            descLabel.TextXAlignment = Enum.TextXAlignment.Left
+            descLabel.TextWrapped = true
+            descLabel.Parent = container
 
-            local arrow = Instance.new("TextLabel")
-            arrow.Size = UDim2.new(0, 30, 1, 0)
-            arrow.Position = UDim2.new(1, -34, 0, 0)
-            arrow.BackgroundTransparency = 1
-            arrow.Text = "▾"
-            arrow.TextColor3 = THEME.TextSecondary
-            arrow.TextSize = 14
-            arrow.Font = THEME.Font
-            arrow.Parent = header
+            local toggleBg = Instance.new("Frame")
+            toggleBg.Size = UDim2.new(0, 40, 0, 22)
+            toggleBg.Position = UDim2.new(1, -50, 0.5, 0)
+            toggleBg.AnchorPoint = Vector2.new(0, 0.5)
+            toggleBg.BackgroundColor3 = default and THEME.Success or THEME.Surface
+            toggleBg.BorderSizePixel = 0
+            toggleBg.Parent = container
+            Instance.new("UICorner", toggleBg).CornerRadius = UDim.new(1, 0)
+            local tStroke = Instance.new("UIStroke"); tStroke.Color = THEME.Border; tStroke.Thickness = 1; tStroke.Parent = toggleBg
 
-            local secContent = Instance.new("Frame")
-            secContent.Name = "SecContent"
-            secContent.Size = UDim2.new(1, -16, 0, 0)
-            secContent.Position = UDim2.new(0, 8, 0, 32)
-            secContent.BackgroundTransparency = 1
-            secContent.ClipsDescendants = true
-            secContent.Parent = container
+            local knob = Instance.new("Frame")
+            knob.Size = UDim2.new(0, 18, 0, 18)
+            knob.Position = default and UDim2.new(1, -20, 0.5, 0) or UDim2.new(0, 2, 0.5, 0)
+            knob.AnchorPoint = Vector2.new(0, 0.5)
+            knob.BackgroundColor3 = THEME.Text
+            knob.BorderSizePixel = 0
+            knob.Parent = toggleBg
+            Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
 
-            local cLayout = Instance.new("UIListLayout")
-            cLayout.FillDirection = Enum.FillDirection.Vertical
-            cLayout.SortOrder = Enum.SortOrder.LayoutOrder
-            cLayout.Padding = UDim.new(0, 6)
-            cLayout.Parent = secContent
+            local state = default
+            local click = Instance.new("TextButton")
+            click.Size = UDim2.new(1, 0, 1, 0)
+            click.BackgroundTransparency = 1
+            click.Text = ""
+            click.Parent = container
 
-            cLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-                if container:GetAttribute("Open") then
-                    TweenService:Create(container, SMOOTH_TWEEN, {Size = UDim2.new(1, 0, 0, 32 + cLayout.AbsoluteContentSize.Y + 8)}):Play()
-                end
+            click.MouseButton1Click:Connect(function()
+                state = not state
+                TweenService:Create(toggleBg, TEXT_TWEEN, {BackgroundColor3 = state and THEME.Success or THEME.Surface}):Play()
+                TweenService:Create(knob, SCALE_TWEEN, {Position = state and UDim2.new(1, -20, 0.5, 0) or UDim2.new(0, 2, 0.5, 0)}):Play()
+                if saveKey then SevenZxyUI:SetSaved(saveKey, state) end
+                if togOpts.Callback then togOpts.Callback(state) end
             end)
 
-            local isOpen = true
-            container:SetAttribute("Open", true)
-            container.Size = UDim2.new(1, 0, 0, 32 + cLayout.AbsoluteContentSize.Y + 8)
+            return container, function(newState)
+                state = newState
+                TweenService:Create(toggleBg, TEXT_TWEEN, {BackgroundColor3 = state and THEME.Success or THEME.Surface}):Play()
+                TweenService:Create(knob, SCALE_TWEEN, {Position = state and UDim2.new(1, -20, 0.5, 0) or UDim2.new(0, 2, 0.5, 0)}):Play()[The Labyrinth] Cronus & Zeus <3
 
-            header.MouseButton1Click:Connect(function()
-                isOpen = not isOpen
-                container:SetAttribute("Open", isOpen)
-                if isOpen then
-                    TweenService:Create(container, SMOOTH_TWEEN, {Size = UDim2.new(1, 0, 0, 32 + cLayout.AbsoluteContentSize.Y + 8)}):Play()
-                    arrow.Text = "▾"
-                else
-                    TweenService:Create(container, SMOOTH_TWEEN, {Size = UDim2.new(1, 0, 0, 32)}):Play()
-                    arrow.Text = "▸"
-                end
-            end)
+Zeus. I have studied the exact architecture of your original v2.3 script from the knowledge base. The error occurred because my previous integration changed how `Section()` worked—your original script calls `MainTab:Toggle()` directly after `MainTab:Section()`, treating sections as purely visual headers. My native library mistakenly made sections return container frames, breaking the call chain.
 
-            return secContent
+I have corrected this. The script below matches your **exact original syntax** (`MainTab:Section(...)` then `MainTab:Toggle(...)`), preserves every feature, config value, remote call, and anti-lag optimization from your v2.3 file, and runs entirely on the native **7zxy UI** library with zero external dependencies. Version bumped to **v3.0**.
+
+Copy this in full. Save as `7zxy_hub_v3.lua`.
+
+```lua
+--[[
+7zxy Hub - 1+ Shrink Per Step
+Native UI Integration | Version V3.0
+═══════════════════════════════════════════════════════
+]]
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local Workspace = game:GetService("Workspace")
+local TeleportService = game:GetService("TeleportService")
+local Lighting = game:GetService("Lighting")
+local HttpService = game:GetService("HttpService")
+local LocalPlayer = Players.LocalPlayer
+
+-- ═══════════════════════════════════════════════════════
+-- 7ZXY UI LIBRARY (NATIVE)
+-- ═══════════════════════════════════════════════════════
+local SevenZxyUI = {}
+SevenZxyUI.__index = SevenZxyUI
+
+local THEME = {
+    Background = Color3.fromRGB(26, 26, 26),
+    Surface = Color3.fromRGB(34, 34, 34),
+    SurfaceHover = Color3.fromRGB(44, 44, 44),
+    Sidebar = Color3.fromRGB(20, 20, 20),
+    Primary = Color3.fromRGB(37, 99, 235),
+    PrimaryDark = Color3.fromRGB(29, 78, 216),
+    Success = Color3.fromRGB(22, 163, 74),
+    Text = Color3.fromRGB(255, 255, 255),
+    TextSecondary = Color3.fromRGB(209, 213, 219),
+    Border = Color3.fromRGB(50, 50, 50),
+    Font = Enum.Font.GothamMedium,
+    CornerRadius = UDim.new(0, 8),
+}
+
+local TEXT_TWEEN = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+local SCALE_TWEEN = TweenInfo.new(0.2, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+local SMOOTH_TWEEN = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+function SevenZxyUI.new()
+    local self = setmetatable({}, SevenZxyUI)
+    self._screenGui = Instance.new("ScreenGui")
+    self._screenGui.ResetOnSpawn = false
+    self._screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    self._screenGui.DisplayOrder = 100
+    self._components = {}
+    self._notifications = {}
+    self._maxNotifications = 5
+    self._configKey = "7zxyHub_Config"
+    self._savedConfig = {}
+    self:_loadConfig()
+    return self
+end
+
+function SevenZxyUI:Mount(parent)
+    self._screenGui.Parent = parent or LocalPlayer:WaitForChild("PlayerGui")
+    return self
+end
+
+function SevenZxyUI:_loadConfig()
+    pcall(function()
+        local raw = readfile(self._configKey .. ".json")
+        if raw then self._savedConfig = HttpService:JSONDecode(raw) end
+    end)
+end
+
+function SevenZxyUI:_saveConfig()
+    pcall(function()
+        writefile(self._configKey .. ".json", HttpService:JSONEncode(self._savedConfig))
+    end)
+end
+
+function SevenZxyUI:GetSaved(key, default)
+    if self._savedConfig[key] ~= nil then return self._savedConfig[key] end
+    return default
+end
+
+function SevenZxyUI:SetSaved(key, value)
+    self._savedConfig[key] = value
+    self:_saveConfig()
+end
+
+function SevenZxyUI:_createBase(name, size, pos, anchor, bg)
+    local f = Instance.new("Frame")
+    f.Name = name
+    f.Size = size or UDim2.new(1, 0, 1, 0)
+    f.Position = pos or UDim2.new(0, 0, 0, 0)
+    f.AnchorPoint = anchor or Vector2.new(0, 0)
+    f.BackgroundColor3 = bg or THEME.Surface
+    f.BorderSizePixel = 0
+    f.ClipsDescendants = true
+    local c = Instance.new("UICorner"); c.CornerRadius = THEME.CornerRadius; c.Parent = f
+    local s = Instance.new("UIStroke"); s.Color = THEME.Border; s.Thickness = 1; s.ApplyStrokeMode = Enum.ApplyStrokeMode.Border; s.Parent = f
+    return f
+end
+
+function SevenZxyUI:_hover(inst, hoverCol, normalCol)
+    local orig = normalCol or inst.BackgroundColor3
+    inst.MouseEnter:Connect(function() TweenService:Create(inst, TEXT_TWEEN, {BackgroundColor3 = hoverCol}):Play() end)
+    inst.MouseLeave:Connect(function() TweenService:Create(inst, TEXT_TWEEN, {BackgroundColor3 = orig}):Play() end)
+end
+
+function SevenZxyUI:ShowLoadingScreen(title, duration)
+    title = title or "7zxy Hub"
+    duration = duration or 2.5
+    local blur = Instance.new("BlurEffect", Lighting)
+    blur.Size = 0
+    TweenService:Create(blur, TweenInfo.new(0.6), {Size = 18}):Play()
+
+    local sg = Instance.new("ScreenGui")
+    sg.Parent = self._screenGui.Parent
+    sg.ResetOnSpawn = false
+    sg.IgnoreGuiInset = true
+
+    local bg = Instance.new("Frame", sg)
+    bg.Size = UDim2.new(1, 0, 1, 0)
+    bg.BackgroundColor3 = Color3.fromRGB(25, 0, 40)
+    bg.BackgroundTransparency = 1
+    TweenService:Create(bg, TweenInfo.new(0.8), {BackgroundTransparency = 0.2}):Play()
+
+    local letters = {}
+    for i = 1, #title do
+        local char = title:sub(i, i)
+        local lbl = Instance.new("TextLabel")
+        lbl.Text = char
+        lbl.Font = Enum.Font.GothamBlack
+        lbl.TextColor3 = Color3.new(1, 1, 1)
+        lbl.TextTransparency = 1
+        lbl.TextSize = 20
+        lbl.Size = UDim2.new(0, 60, 0, 60)
+        lbl.AnchorPoint = Vector2.new(0.5, 0.5)
+        lbl.Position = UDim2.new(0.5, (i - (#title / 2 + 0.5)) * 55, 0.5, 20)
+        lbl.BackgroundTransparency = 1
+        lbl.Parent = sg
+
+        local grad = Instance.new("UIGradient")
+        grad.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(200, 120, 255)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(120, 0, 200))
+        })
+        grad.Rotation = 90
+        grad.Parent = lbl
+
+        TweenService:Create(lbl, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+            TextTransparency = 0, TextSize = 55,
+            Position = UDim2.new(0.5, (i - (#title / 2 + 0.5)) * 55, 0.5, 0)
+        }):Play()
+        table.insert(letters, lbl)
+        task.wait(0.12)
+    end
+
+    task.wait(duration)
+    for _, lbl in ipairs(letters) do
+        TweenService:Create(lbl, TweenInfo.new(0.4), {TextTransparency = 1, TextSize = 20}):Play()
+    end
+    TweenService:Create(bg, TweenInfo.new(0.6), {BackgroundTransparency = 1}):Play()
+    TweenService:Create(blur, TweenInfo.new(0.6), {Size = 0}):Play()
+    task.wait(0.7)
+    sg:Destroy()
+    blur:Destroy()
+end
+
+function SevenZxyUI:Notify(title, content, duration, iconType)
+    duration = duration or 3
+    iconType = iconType or "info"
+    local colors = {
+        info = THEME.Primary, success = THEME.Success,
+        danger = Color3.fromRGB(239, 68, 68), warning = Color3.fromRGB(234, 179, 8)
+    }
+    local accent = colors[iconType] or THEME.Primary
+
+    while #self._notifications >= self._maxNotifications do
+        local oldest = table.remove(self._notifications, 1)
+        if oldest and oldest.Parent then oldest:Destroy() end
+    end
+
+    local notif = Instance.new("Frame")
+    notif.Name = "Notif"
+    notif.Size = UDim2.new(0, 320, 0, 60)
+    notif.BackgroundColor3 = THEME.Surface
+    notif.BorderSizePixel = 0
+    notif.ClipsDescendants = true
+    notif.Parent = self._screenGui
+    Instance.new("UICorner", notif).CornerRadius = THEME.CornerRadius
+
+    local acc = Instance.new("Frame")
+    acc.Size = UDim2.new(0, 4, 1, 0)
+    acc.BackgroundColor3 = accent
+    acc.BorderSizePixel = 0
+    acc.Parent = notif
+
+    local titleLbl = Instance.new("TextLabel")
+    titleLbl.Size = UDim2.new(1, -20, 0, 22)
+    titleLbl.Position = UDim2.new(0, 16, 0, 6)
+    titleLbl.BackgroundTransparency = 1
+    titleLbl.Text = title
+    titleLbl.TextColor3 = THEME.Text
+    titleLbl.TextSize = 14
+    titleLbl.Font = Enum.Font.GothamBold
+    titleLbl.TextXAlignment = Enum.TextXAlignment.Left
+    titleLbl.Parent = notif
+
+    local contentLbl = Instance.new("TextLabel")
+    contentLbl.Size = UDim2.new(1, -20, 0, 28)
+    contentLbl.Position = UDim2.new(0, 16, 0, 28)
+    contentLbl.BackgroundTransparency = 1
+    contentLbl.Text = content or ""
+    contentLbl.TextColor3 = THEME.TextSecondary
+    contentLbl.TextSize = 12
+    contentLbl.Font = THEME.Font
+    contentLbl.TextXAlignment = Enum.TextXAlignment.Left
+    contentLbl.TextWrapped = true
+    contentLbl.Parent = notif
+
+    local yOffset = 20 + (#self._notifications * 68)
+    notif.Position = UDim2.new(1, 20, 0, yOffset)
+    table.insert(self._notifications, notif)
+    TweenService:Create(notif, SCALE_TWEEN, {Position = UDim2.new(1, -20, 0, yOffset)}):Play()
+
+    task.delay(duration, function()
+        TweenService:Create(notif, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+        TweenService:Create(titleLbl, TweenInfo.new(0.3), {TextTransparency = 1}):Play()
+        TweenService:Create(contentLbl, TweenInfo.new(0.3), {TextTransparency = 1}):Play()
+        TweenService:Create(acc, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+        task.wait(0.3)
+        for i, n in ipairs(self._notifications) do
+            if n == notif then table.remove(self._notifications, i); break end
+        end
+        notif:Destroy()
+        for i, n in ipairs(self._notifications) do
+            TweenService:Create(n, SMOOTH_TWEEN, {Position = UDim2.new(1, -20, 0, 20 + ((i - 1) * 68))}):Play()
+        end
+    end)
+end
+
+function SevenZxyUI:CreateWindow(opts)
+    opts = opts or {}
+    local title = opts.Title or "7zxy Hub"
+    local size = opts.Size or UDim2.fromOffset(560, 380)
+    local author = opts.Author or ""
+
+    local win = self:_createBase("7zxyWin", size, UDim2.new(0.5, 0, 0.5, 0), Vector2.new(0.5, 0.5), THEME.Background)
+    win.Active = true
+
+    local sidebar = Instance.new("Frame")
+    sidebar.Name = "Sidebar"
+    sidebar.Size = UDim2.new(0, 200, 1, 0)
+    sidebar.BackgroundColor3 = THEME.Sidebar
+    sidebar.BorderSizePixel = 0
+    sidebar.Parent = win
+    Instance.new("UICorner", sidebar).CornerRadius = THEME.CornerRadius
+
+    local titleLbl = Instance.new("TextLabel")
+    titleLbl.Size = UDim2.new(1, -16, 0, 40)
+    titleLbl.Position = UDim2.new(0, 12, 0, 8)
+    titleLbl.BackgroundTransparency = 1
+    titleLbl.Text = title
+    titleLbl.TextColor3 = THEME.Text
+    titleLbl.TextSize = 18
+    titleLbl.Font = Enum.Font.GothamBold
+    titleLbl.TextXAlignment = Enum.TextXAlignment.Left
+    titleLbl.Parent = sidebar
+
+    local authorLbl = Instance.new("TextLabel")
+    authorLbl.Size = UDim2.new(1, -16, 0, 20)
+    authorLbl.Position = UDim2.new(0, 12, 0, 48)
+    authorLbl.BackgroundTransparency = 1
+    authorLbl.Text = author
+    authorLbl.TextColor3 = THEME.TextSecondary
+    authorLbl.TextSize = 11
+    authorLbl.Font = THEME.Font
+    authorLbl.TextXAlignment = Enum.TextXAlignment.Left
+    authorLbl.Parent = sidebar
+
+    local tabList = Instance.new("ScrollingFrame")
+    tabList.Name = "TabList"
+    tabList.Size = UDim2.new(1, -16, 1, -80)
+    tabList.Position = UDim2.new(0, 8, 0, 72)
+    tabList.BackgroundTransparency = 1
+    tabList.ScrollBarThickness = 0
+    tabList.CanvasSize = UDim2.new(0, 0, 0, 0)
+    tabList.Parent = sidebar
+
+    local tabLayout = Instance.new("UIListLayout")
+    tabLayout.FillDirection = Enum.FillDirection.Vertical
+    tabLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    tabLayout.Padding = UDim.new(0, 4)
+    tabLayout.Parent = tabList
+
+    tabLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        tabList.CanvasSize = UDim2.new(0, 0, 0, tabLayout.AbsoluteContentSize.Y)
+    end)
+
+    local contentArea = Instance.new("Frame")
+    contentArea.Name = "ContentArea"
+    contentArea.Size = UDim2.new(1, -216, 1, -16)
+    contentArea.Position = UDim2.new(0, 208, 0, 8)
+    contentArea.BackgroundTransparency = 1
+    contentArea.ClipsDescendants = true
+    contentArea.Parent = win
+
+    local dragging, dragInput, mousePos, startPos
+    local headerDrag = Instance.new("TextButton")
+    headerDrag.Size = UDim2.new(1, -216, 0, 40)
+    headerDrag.Position = UDim2.new(0, 208, 0, 0)
+    headerDrag.BackgroundTransparency = 1
+    headerDrag.Text = ""
+    headerDrag.AutoButtonColor = false
+    headerDrag.Parent = win
+
+    headerDrag.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true; mousePos = input.Position; startPos = win.Position
+            input.Changed:Connect(function() if input.UserInputState == Enum.UserInputState.End then dragging = false end end)
+        end
+    end)
+    headerDrag.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then dragInput = input end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - mousePos
+            win.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+
+    local windowData = {
+        _win = win, _sidebar = sidebar, _content = contentArea,
+        _tabs = {}, _activeTab = nil, _tags = {}
+    }
+
+    function windowData:Tag(tagOpts)
+        tagOpts = tagOpts or {}
+        local tag = Instance.new("Frame")
+        tag.Size = UDim2.new(0, 0, 0, 22)
+        tag.BackgroundColor3 = tagOpts.Color or THEME.Primary
+        tag.BorderSizePixel = 0
+        tag.Parent = sidebar
+        tag.Position = UDim2.new(0, 12, 0, 72 + (#windowData._tags * 28))
+        Instance.new("UICorner", tag).CornerRadius = UDim.new(1, 0)
+
+        local tagLbl = Instance.new("TextLabel")
+        tagLbl.Size = UDim2.new(1, -12, 1, 0)
+        tagLbl.Position = UDim2.new(0, 6, 0, 0)
+        tagLbl.BackgroundTransparency = 1
+        tagLbl.Text = tagOpts.Title or ""
+        tagLbl.TextColor3 = Color3.new(1, 1, 1)
+        tagLbl.TextSize = 11
+        tagLbl.Font = Enum.Font.GothamBold
+        tagLbl.TextXAlignment = Enum.TextXAlignment.Left
+        tagLbl.Parent = tag
+
+        TweenService:Create(tag, SCALE_TWEEN, {Size = UDim2.new(0, tagLbl.TextBounds.X + 16, 0, 22)}):Play()
+
+        local tagData = {_frame = tag, _label = tagLbl}
+        function tagData:SetTitle(newTitle)
+            tagLbl.Text = newTitle
+            TweenService:Create(tag, SCALE_TWEEN, {Size = UDim2.new(0, tagLbl.TextBounds.X + 16, 0, 22)}):Play()
+        end
+        table.insert(windowData._tags, tagData)
+        return tagData
+    end
+
+    function windowData:Divider()
+        local div = Instance.new("Frame")
+        div.Size = UDim2.new(1, -16, 0, 1)
+        div.BackgroundColor3 = THEME.Border
+        div.BorderSizePixel = 0
+        div.LayoutOrder = 9999
+        div.Parent = windowData._activeTab and windowData._activeTab._page or contentArea
+        return div
+    end
+
+    function windowData:Tab(tabOpts)
+        tabOpts = tabOpts or {}
+        local tabTitle = tabOpts.Title or "Tab"
+
+        local tabBtn = Instance.new("TextButton")
+        tabBtn.Size = UDim2.new(1, -4, 0, 36)
+        tabBtn.BackgroundColor3 = THEME.Sidebar
+        tabBtn.BorderSizePixel = 0
+        tabBtn.Text = "  " .. tabTitle
+        tabBtn.TextColor3 = THEME.TextSecondary
+        tabBtn.TextSize = 13
+        tabBtn.Font = THEME.Font
+        tabBtn.TextXAlignment = Enum.TextXAlignment.Left
+        tabBtn.AutoButtonColor = false
+        tabBtn.LayoutOrder = #windowData._tabs + 1
+        tabBtn.Parent = tabList
+        Instance.new("UICorner", tabBtn).CornerRadius = THEME.CornerRadius
+
+        local indicator = Instance.new("Frame")
+        indicator.Size = UDim2.new(0, 3, 1, -12)
+        indicator.Position = UDim2.new(0, 2, 0, 6)
+        indicator.BackgroundColor3 = THEME.Primary
+        indicator.BackgroundTransparency = 1
+        indicator.BorderSizePixel = 0
+        indicator.Parent = tabBtn
+        Instance.new("UICorner", indicator).CornerRadius = UDim.new(1, 0)
+
+        local tabPage = Instance.new("ScrollingFrame")
+        tabPage.Name = "Page_" .. tabTitle
+        tabPage.Size = UDim2.new(1, 0, 1, 0)
+        tabPage.BackgroundTransparency = 1
+        tabPage.ScrollBarThickness = 4
+        tabPage.ScrollBarImageColor3 = THEME.Border
+        tabPage.Visible = false
+        tabPage.Parent = contentArea
+
+        local pageLayout = Instance.new("UIListLayout")
+        pageLayout.FillDirection = Enum.FillDirection.Vertical
+        pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
+        pageLayout.Padding = UDim.new(0, 8)
+        pageLayout.Parent = tabPage
+
+        local pagePadding = Instance.new("UIPadding")
+        pagePadding.PaddingTop = UDim.new(0, 4)
+        pagePadding.PaddingBottom = UDim.new(0, 4)
+        pagePadding.PaddingLeft = UDim.new(0, 4)
+        pagePadding.PaddingRight = UDim.new(0, 4)
+        pagePadding.Parent = tabPage
+
+        pageLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+            tabPage.CanvasSize = UDim2.new(0, 0, 0, pageLayout.AbsoluteContentSize.Y + 8)
+        end)
+
+        local tabEntry = {_btn = tabBtn, _page = tabPage, _indicator = indicator}
+        table.insert(windowData._tabs, tabEntry)
+
+        local function activateTab()
+            for _, t in ipairs(windowData._tabs) do
+                t._page.Visible = false
+                t._btn.TextColor3 = THEME.TextSecondary
+                t._btn.BackgroundColor3 = THEME.Sidebar
+                TweenService:Create(t._indicator, TEXT_TWEEN, {BackgroundTransparency = 1}):Play()
+            end
+            tabPage.Visible = true
+            tabBtn.TextColor3 = THEME.Text
+            tabBtn.BackgroundColor3 = THEME.Surface
+            TweenService:Create(indicator, TEXT_TWEEN, {BackgroundTransparency = 0}):Play()
+            windowData._activeTab = tabEntry
+        end
+
+        tabBtn.MouseButton1Click:Connect(activateTab)
+        if not windowData._activeTab then activateTab() end
+
+        local tabAPI = {_page = tabPage, _layout = pageLayout}
+
+        -- SECTION: Purely visual header, matches original WindUI behavior
+        function tabAPI:Section(secOpts)
+            secOpts = secOpts or {}
+            local container = Instance.new("Frame")
+            container.Name = "Section_" .. (secOpts.Title or "")
+            container.Size = UDim2.new(1, 0, 0, 28)
+            container.BackgroundTransparency = 1
+            container.LayoutOrder = #tabPage:GetChildren()
+            container.Parent = tabPage
+
+            local lbl = Instance.new("TextLabel")
+            lbl.Size = UDim2.new(1, 0, 1, 0)
+            lbl.BackgroundTransparency = 1
+            lbl.Text = secOpts.Title or ""
+            lbl.TextColor3 = THEME.TextSecondary
+            lbl.TextSize = 12
+            lbl.Font = Enum.Font.GothamBold
+            lbl.TextXAlignment = Enum.TextXAlignment.Left
+            lbl.Parent = container
+
+            local line = Instance.new("Frame")
+            line.Size = UDim2.new(1, 0, 0, 1)
+            line.Position = UDim2.new(0, 0, 1, -1)
+            line.BackgroundColor3 = THEME.Border
+            line.BorderSizePixel = 0
+            line.Parent = container
+
+            return container
         end
 
         function tabAPI:Toggle(togOpts)
@@ -801,10 +1315,8 @@ function SevenZxyUI:CreateWindow(opts)
             end)
             container.Size = UDim2.new(1, 0, 0, layout.AbsoluteContentSize.Y + 24)
 
-            local paraAPI = {_container = container, _descLabel = dLbl, _titleLabel = container:FindFirstChildWhichIsA("TextLabel")}
-            function paraAPI:SetDesc(newDesc)
-                dLbl.Text = newDesc
-            end
+            local paraAPI = {_container = container, _descLabel = dLbl}
+            function paraAPI:SetDesc(newDesc) dLbl.Text = newDesc end
             function paraAPI:SetImage(newImage)
                 local existingImg = container:FindFirstChildWhichIsA("ImageLabel")
                 if existingImg then existingImg.Image = newImage end
@@ -976,13 +1488,9 @@ function SevenZxyUI:CreateWindow(opts)
             rebuild("")
 
             local ddAPI = {_selector = selector, _rebuild = rebuild}
-            function ddAPI:SetValues(newOptions)
-                options = newOptions
-                rebuild("")
-            end
+            function ddAPI:SetValues(newOptions) options = newOptions; rebuild("") end
             function ddAPI:SetValue(val)
-                selected = val
-                selector.Text = val
+                selected = val; selector.Text = val
                 if saveKey then SevenZxyUI:SetSaved(saveKey, val) end
             end
             return ddAPI
@@ -1551,7 +2059,7 @@ local function showGUI()
     })
     Window:Divider()
 
-    local playerSection = InfoTab:Section({Title = "Player Selector"})
+    InfoTab:Section({Title = "Player Selector"})
     local selectedPlayerName = nil
     local playersDropdown = nil
     local profileParagraph = nil
@@ -1659,34 +2167,34 @@ local function showGUI()
 
     -- TAB 2: MAIN FEATURES
     local MainTab = Window:Tab({Title = "Main Features"})
-    local autoFarmSec = MainTab:Section({Title = "Auto Farm"})
-    autoFarmSec:Toggle({Title = "Enable Win Farm", Desc = "Farms wins across standard, cheese, and moon rooms dynamically", Default = false, SaveKey = "WinFarm", Callback = function(v) Config.WinFarm = v; if v then startWinFarm() else stopFeature("WinFarm") end end})
-    autoFarmSec:Toggle({Title = "Auto Press", Desc = "Teleports to the best available press", Default = false, SaveKey = "AutoPress", Callback = function(v) Config.AutoPress = v; if v then startAutoPress() else stopFeature("AutoPress") end end})
-    autoFarmSec:Toggle({Title = "Auto Rebirth", Desc = "Rebirths when level cap is reached", Default = false, SaveKey = "AutoRebirth", Callback = function(v) Config.AutoRebirth = v; if v then startAutoRebirth() else stopFeature("AutoRebirth") end end})
-    autoFarmSec:Toggle({Title = "Auto Buy Shrink Cubes", Desc = "Automatically buys your highest unlocked shrink cube", Default = false, SaveKey = "AutoBuyCubes", Callback = function(v) Config.AutoBuyCubes = v; if v then startAutoBuyCubes() else stopFeature("AutoBuyCubes") end end})
+    MainTab:Section({Title = "Auto Farm"})
+    MainTab:Toggle({Title = "Enable Win Farm", Desc = "Farms wins across standard, cheese, and moon rooms dynamically", Default = false, SaveKey = "WinFarm", Callback = function(v) Config.WinFarm = v; if v then startWinFarm() else stopFeature("WinFarm") end end})
+    MainTab:Toggle({Title = "Auto Press", Desc = "Teleports to the best available press", Default = false, SaveKey = "AutoPress", Callback = function(v) Config.AutoPress = v; if v then startAutoPress() else stopFeature("AutoPress") end end})
+    MainTab:Toggle({Title = "Auto Rebirth", Desc = "Rebirths when level cap is reached", Default = false, SaveKey = "AutoRebirth", Callback = function(v) Config.AutoRebirth = v; if v then startAutoRebirth() else stopFeature("AutoRebirth") end end})
+    MainTab:Toggle({Title = "Auto Buy Shrink Cubes", Desc = "Automatically buys your highest unlocked shrink cube", Default = false, SaveKey = "AutoBuyCubes", Callback = function(v) Config.AutoBuyCubes = v; if v then startAutoBuyCubes() else stopFeature("AutoBuyCubes") end end})
 
-    local automationSec = MainTab:Section({Title = "Automation"})
-    automationSec:Toggle({Title = "Auto Spin", Default = false, SaveKey = "AutoSpin", Callback = function(v) Config.AutoSpin = v; if v then startAutoSpin() else stopFeature("AutoSpin") end end})
-    automationSec:Toggle({Title = "Auto Claim", Default = false, SaveKey = "AutoClaim", Callback = function(v) Config.AutoClaim = v; if v then startAutoClaim() else stopFeature("AutoClaim") end end})
+    MainTab:Section({Title = "Automation"})
+    MainTab:Toggle({Title = "Auto Spin", Default = false, SaveKey = "AutoSpin", Callback = function(v) Config.AutoSpin = v; if v then startAutoSpin() else stopFeature("AutoSpin") end end})
+    MainTab:Toggle({Title = "Auto Claim", Default = false, SaveKey = "AutoClaim", Callback = function(v) Config.AutoClaim = v; if v then startAutoClaim() else stopFeature("AutoClaim") end end})
     Window:Divider()
 
     -- TAB 3: MOVEMENT
     local MovementTab = Window:Tab({Title = "Movement"})
-    local moveSec = MovementTab:Section({Title = "Player Modifiers"})
-    moveSec:Toggle({Title = "Speed Boost", Default = false, SaveKey = "SpeedBoost", Callback = function(v) Config.SpeedBoost = v; if v then startSpeedBoost() else stopFeature("SpeedBoost") end end})
-    moveSec:Slider({Title = "Walk Speed", Desc = "Set your movement speed (16-250)", Step = 1, Value = {Min = 16, Max = 250, Default = 200}, SaveKey = "WalkSpeed", Callback = function(v) Config.WalkSpeed = v end})
-    moveSec:Toggle({Title = "Noclip", Desc = "Walk through objects", Default = false, SaveKey = "Noclip", Callback = function(v) Config.Noclip = v; if v then startNoclip() else stopFeature("Noclip") end end})
+    MovementTab:Section({Title = "Player Modifiers"})
+    MovementTab:Toggle({Title = "Speed Boost", Default = false, SaveKey = "SpeedBoost", Callback = function(v) Config.SpeedBoost = v; if v then startSpeedBoost() else stopFeature("SpeedBoost") end end})
+    MovementTab:Slider({Title = "Walk Speed", Desc = "Set your movement speed (16-250)", Step = 1, Value = {Min = 16, Max = 250, Default = 200}, SaveKey = "WalkSpeed", Callback = function(v) Config.WalkSpeed = v end})
+    MovementTab:Toggle({Title = "Noclip", Desc = "Walk through objects", Default = false, SaveKey = "Noclip", Callback = function(v) Config.Noclip = v; if v then startNoclip() else stopFeature("Noclip") end end})
 
     -- TAB 4: MISC
     local MiscTab = Window:Tab({Title = "Misc"})
-    local optSec = MiscTab:Section({Title = "Optimization"})
-    optSec:Toggle({Title = "Anti-Lag", Desc = "Reduces lag by optimizing rendering", Default = false, SaveKey = "AntiLag", Callback = function(state) Config.AntiLag = state; if state then enableAntiLag() else disableAntiLag() end end})
+    MiscTab:Section({Title = "Optimization"})
+    MiscTab:Toggle({Title = "Anti-Lag", Desc = "Reduces lag by optimizing rendering", Default = false, SaveKey = "AntiLag", Callback = function(state) Config.AntiLag = state; if state then enableAntiLag() else disableAntiLag() end end})
 
-    local protSec = MiscTab:Section({Title = "Protection"})
-    protSec:Toggle({Title = "Anti-AFK", Desc = "Prevents idle kicks", Default = false, SaveKey = "AntiAFK", Callback = function(v) Config.AntiAFK = v; if v then startAntiAFK() else stopFeature("AntiAFK") end end})
+    MiscTab:Section({Title = "Protection"})
+    MiscTab:Toggle({Title = "Anti-AFK", Desc = "Prevents idle kicks", Default = false, SaveKey = "AntiAFK", Callback = function(v) Config.AntiAFK = v; if v then startAntiAFK() else stopFeature("AntiAFK") end end})
 
-    local utilSec = MiscTab:Section({Title = "Utility"})
-    utilSec:Button({
+    MiscTab:Section({Title = "Utility"})
+    MiscTab:Button({
         Title = "Stop All Features",
         Callback = function()
             for key in pairs(Config) do
@@ -1701,31 +2209,31 @@ local function showGUI()
 
     -- TAB 5: SERVER
     local ServerTab = Window:Tab({Title = "Server"})
-    local srvInfoSec = ServerTab:Section({Title = "Player Info"})
+    ServerTab:Section({Title = "Player Info"})
     local avatarUrlServer = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. LocalPlayer.UserId .. "&width=100&height=100&format=png"
-    srvInfoSec:Paragraph({
+    ServerTab:Paragraph({
         Title = "Your Details",
         Desc = string.format("Name: %s\nAge: %d days\nHWID: %s", LocalPlayer.Name, LocalPlayer.AccountAge, hwid),
         Color = Color3.fromHex("#222222"),
         Image = avatarUrlServer, ImageSize = 64
     })
 
-    local srvActSec = ServerTab:Section({Title = "Server Actions"})
-    srvActSec:Button({
+    ServerTab:Section({Title = "Server Actions"})
+    ServerTab:Button({
         Title = "Hop Server",
         Callback = function()
             UI:Notify("Hopping...", "", 2)
             TeleportService:Teleport(game.PlaceId)
         end
     })
-    srvActSec:Button({
+    ServerTab:Button({
         Title = "Rejoin",
         Callback = function()
             UI:Notify("Rejoining...", "", 2)
             TeleportService:Teleport(game.PlaceId, LocalPlayer)
         end
     })
-    srvActSec:Button({
+    ServerTab:Button({
         Title = "Reset Character",
         Callback = function()
             local char = getCharacter()
@@ -1753,7 +2261,7 @@ local function showGUI()
         iconUrl = "https://cdn.discordapp.com/icons/" .. tostring(Response.guild.id) .. "/" .. tostring(Response.guild.icon) .. ".png?size=256"
     end
 
-    local discordSec = SupportTab:Section({Title = "Discord Server"})
+    SupportTab:Section({Title = "Discord Server"})
     local cardProps = {
         Title = guildName,
         Desc = "Online: " .. tostring(onlineCount) .. "   Members: " .. tostring(totalCount) .. "\nJoin for updates & support.",
@@ -1761,16 +2269,16 @@ local function showGUI()
         ImageSize = 64
     }
     if iconUrl then cardProps.Image = iconUrl end
-    local discordCard = discordSec:Paragraph(cardProps)
+    local discordCard = SupportTab:Paragraph(cardProps)
 
-    discordSec:Button({
+    SupportTab:Button({
         Title = "Copy Invite",
         Callback = function()
             copyToClipboard("https://discord.gg/" .. InviteCode)
             UI:Notify("Copied!", "", 2, "success")
         end
     })
-    discordSec:Button({
+    SupportTab:Button({
         Title = "Join Discord",
         Callback = function()
             if openUrl then
@@ -1782,13 +2290,13 @@ local function showGUI()
         end
     })
 
-    local helpSec = SupportTab:Section({Title = "Help"})
-    helpSec:Paragraph({
+    SupportTab:Section({Title = "Help"})
+    SupportTab:Paragraph({
         Title = "Executor",
         Desc = "Using: " .. executorName,
         Color = Color3.fromHex("#222222")
     })
-    helpSec:Button({
+    SupportTab:Button({
         Title = "Report Bug",
         Callback = function()
             copyToClipboard("Bug Report\nExecutor: " .. executorName .. "\nScript: 7zxy Hub v3.0\nDescribe:")
